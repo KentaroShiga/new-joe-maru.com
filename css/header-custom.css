@@ -1,0 +1,97 @@
+/* ヘッダー用カスタムCSS */
+.header-custom-bar {
+  width: 100vw;
+  min-width: 320px;
+  height: 100px;
+  position: relative;
+  background: #78B96C;
+  overflow: hidden;
+  margin: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+.header-custom-logo {
+  width: 194.84px;
+  height: 48px;
+  position: absolute;
+  left: 16px;
+  top: 26px;
+}
+.header-custom-ic {
+  width: 119px;
+  height: 15px;
+  position: absolute;
+  left: 54px;
+  top: 75px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-family: Merriweather, serif;
+  font-weight: 400;
+  line-height: 14px;
+  word-wrap: break-word;
+}
+.header-custom-nav {
+  position: absolute;
+  left: 250px;
+  top: 22px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  z-index: 2;
+}
+.header-custom-nav a {
+  color: white;
+  font-size: 16px;
+  font-family: 'Yu Gothic', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  background: none;
+}
+.header-custom-nav a.active {
+  background: #78B96C;
+}
+.header-custom-telarea {
+  position: absolute;
+  right: 30px;
+  top: 0;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+.header-custom-telicon {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.header-custom-telnums {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.header-custom-telnums div {
+  color: #F2F2F2;
+  font-size: 20px;
+  font-family: 'Yu Gothic', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.2;
+}
+body {
+  overflow-x: hidden;
+}
+.toppage-mainvisual {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  background: #fff;
+} 

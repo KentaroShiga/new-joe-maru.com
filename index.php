@@ -22,15 +22,15 @@ get_header(); ?>
 		<!-- トップページ メインビジュアル・セクションここから -->
 		<div class="toppage-mainvisual">
 			<div>
-				        <img src="<?php echo get_template_directory_uri(); ?>/images/fish.png" alt="メインビジュアル" />
-				<img src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="ロゴテキスト" />
+				        <img src="<?php echo get_template_directory_uri(); ?>/images/fish.webp" alt="メインビジュアル" />
+				<img src="<?php echo get_template_directory_uri(); ?>/images/logo.webp" alt="ロゴテキスト" />
 				<h1 class="sr-only">丈丸渡船</h1>
 				<div class="mainvisual-caption">カセ・筏釣りから近海船釣りまで</div>
 			</div>
 			<div class="toppage-section-cards">
 				<div class="toppage-cards-row">
-					<a href="<?php echo esc_url( home_url( '?post_type=post' ) ); ?>" class="toppage-card">
-						<img src="<?php echo get_template_directory_uri(); ?>/images/tyoka.png" alt="釣果一覧">
+					<a href="<?php echo esc_url( home_url( '/?post_type=post' ) ); ?>" class="toppage-card">
+						<img src="<?php echo get_template_directory_uri(); ?>/images/tyoka.webp" alt="釣果一覧">
 						<div class="card-overlay"></div>
 						<h3 class="card-title">釣果一覧</h3>
 						<div class="card-desc">過去の釣果をご紹介</div>
@@ -40,7 +40,7 @@ get_header(); ?>
 					$access_url = $access_page ? get_permalink($access_page->ID) : home_url('?page_id=2');
 					?>
 					<a href="<?php echo esc_url( $access_url ); ?>" class="toppage-card">
-						<img src="<?php echo get_template_directory_uri(); ?>/images/access.png" alt="アクセス">
+						<img src="<?php echo get_template_directory_uri(); ?>/images/access.webp" alt="アクセス">
 						<div class="card-overlay"></div>
 						<h3 class="card-title">アクセスについて</h3>
 						<div class="card-desc">丈丸渡船へのアクセス</div>
@@ -52,7 +52,7 @@ get_header(); ?>
 					$price_url = $price_page ? get_permalink($price_page->ID) : home_url('?page_id=3');
 					?>
 					<a href="<?php echo esc_url( $price_url ); ?>" class="toppage-card">
-						<img src="<?php echo get_template_directory_uri(); ?>/images/price.png" alt="料金について">
+						<img src="<?php echo get_template_directory_uri(); ?>/images/price.webp" alt="料金について">
 						<div class="card-overlay"></div>
 						<h3 class="card-title">料金</h3>
 						<div class="card-desc">料金の詳細</div>
@@ -62,13 +62,13 @@ get_header(); ?>
 					$captain_url = $captain_page ? get_permalink($captain_page->ID) : home_url('?page_id=4');
 					?>
 					<a href="<?php echo esc_url( $captain_url ); ?>" class="toppage-card">
-						        <img src="<?php echo get_template_directory_uri(); ?>/images/captain-new.jpg" alt="船長紹介">
+						        <img src="<?php echo get_template_directory_uri(); ?>/images/captain-new.webp" alt="船長紹介">
 						<div class="card-overlay"></div>
 						<h3 class="card-title">船長紹介</h3>
 						<div class="card-desc">丈丸渡船の船長</div>
 					</a>
-					<a href="<?php echo esc_url( home_url( '?post_type=diary' ) ); ?>" class="toppage-card">
-						        <img src="<?php echo get_template_directory_uri(); ?>/images/blog.png" alt="きょうの日記">
+					<a href="<?php echo esc_url( home_url( '/diary/' ) ); ?>" class="toppage-card">
+						        <img src="<?php echo get_template_directory_uri(); ?>/images/blog.webp" alt="きょうの日記">
 						<div class="card-overlay"></div>
 						<h3 class="card-title">きょうの日記</h3>
 						<div class="card-desc">船長のブログ</div>
@@ -104,7 +104,7 @@ get_header(); ?>
 						<li>現在お知らせはありません。</li>
 					<?php endif; ?>
 				</ul>
-				<a href="<?php echo esc_url( home_url( '?post_type=news' ) ); ?>" class="info-more-btn">
+				<a href="<?php echo esc_url( home_url( '/news/' ) ); ?>" class="info-more-btn">
 					<span class="info-more-btn-label">＞ MORE</span>
 				</a>
 			</div>
@@ -116,7 +116,7 @@ get_header(); ?>
 			<div class="about-inner">
 				
 				<div class="about-content">
-					<img class="about-image" src="<?php echo get_template_directory_uri(); ?>/images/about-joe-maru.jpg" alt="丈丸渡船イメージ" />
+					<img class="about-image" src="<?php echo get_template_directory_uri(); ?>/images/about-joe-maru.webp" alt="丈丸渡船イメージ" />
 					<div class="about-text">
 					<div class="about-title-area">
 					<img src="<?php echo get_template_directory_uri(); ?>/images/lines.png" alt="" class="about-title-bar">
@@ -130,16 +130,16 @@ get_header(); ?>
 						「釣って、食べて、また来たくなる」。<br>
 						そんな心に残る釣り体験を、ぜひ丈丸渡船でお楽しみください。
 						
-						<?php
-						$captain_page = get_page_by_path('captain');
-						$captain_about_url = $captain_page ? get_permalink($captain_page->ID) : home_url('?page_id=4');
-						?>
+				<?php
+				$captain_page = get_page_by_path('captain');
+				$captain_about_url = $captain_page ? get_permalink($captain_page->ID) : home_url('?page_id=4');
+				?>
 						<a class="about-btn about-btn--inline" href="<?php echo esc_url( $captain_about_url ); ?>">
-							<span class="about-btn-inner">
-								<span class="about-btn-arrow">&rsaquo;</span>
-								<span class="about-btn-label">船長紹介</span>
-							</span>
-						</a>
+					<span class="about-btn-inner">
+						<span class="about-btn-arrow">&rsaquo;</span>
+						<span class="about-btn-label">船長紹介</span>
+					</span>
+				</a>
 					</div>
 				</div>
 			</div>
@@ -177,7 +177,7 @@ get_header(); ?>
 									</a>
 								<?php else : ?>
 									<a href="<?php the_permalink(); ?>">
-										<img src="<?php echo get_template_directory_uri(); ?>/images/fish.png" alt="<?php the_title(); ?>" />
+										<img src="<?php echo get_template_directory_uri(); ?>/images/fish.webp" alt="<?php the_title(); ?>" />
 									</a>
 								<?php endif; ?>
 							</div>
@@ -213,7 +213,7 @@ get_header(); ?>
 					?>
 						<div class="latest-catch-card">
 							<div class="latest-catch-card-imgwrap">
-								<img src="<?php echo get_template_directory_uri(); ?>/images/fish.png" alt="釣果なし" />
+								<img src="<?php echo get_template_directory_uri(); ?>/images/fish.webp" alt="釣果なし" />
 							</div>
 							<div class="latest-catch-card-title">釣果投稿がありません</div>
 							<div class="latest-catch-card-date"><?php echo date('Y-m-d'); ?></div>

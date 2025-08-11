@@ -350,16 +350,6 @@
     z-index: 100;
 }
 
-.single-sidebar-wrapper .news-sidebar-fish-species {
-    width: 300px;
-    height: 247px;
-    position: relative;
-    background: rgba(255, 255, 255, 0);
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-    outline: 1px #9F9F9F solid;
-    outline-offset: -1px;
-}
-
 .single-sidebar-wrapper .news-sidebar-contact {
     width: 300px;
     background: #FFFFFF;
@@ -374,14 +364,14 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 249px;
-    left: 26px;
-    top: 15px;
-    position: absolute;
+    width: 100%;
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 6px;
+    max-height: none; /* 最大高さ制限を解除 */
+    overflow: visible; /* はみ出しを許可 */
 }
 
 .single-sidebar-wrapper .news-sidebar-fish-species-item {
@@ -485,6 +475,7 @@
         width: 100%;
         height: auto;
         min-height: 200px;
+		padding: 0px 26px 35px;
     }
     
     .single-sidebar-wrapper .news-sidebar-fish-species-list {
@@ -923,4 +914,26 @@
         padding: 3px 8px;
         border-radius: 10px;
     }
-} 
+}
+
+/* 魚種タグが無限に増えても対応できる設定 */
+.fish-species-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: flex-start;
+  min-height: 28px;
+  max-height: none; /* 高さ制限を解除 */
+}
+
+/* タグエリア全体の高さ制限を解除 */
+.catch-post-tags {
+  margin: 15px auto 15px auto;
+  width: 100%;
+  max-width: 380px;
+  min-height: 28px;
+  max-height: none; /* 高さ制限を解除 */
+  display: flex;
+  align-items: flex-start;
+  overflow: visible; /* はみ出しを許可 */
+}

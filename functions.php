@@ -528,7 +528,7 @@ function create_news_post_type() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => false,
+        'rewrite'            => array('slug' => 'news'),
         'capability_type'    => 'post',
         'menu_icon'          => 'dashicons-megaphone',
         'supports'           => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
@@ -586,6 +586,8 @@ function mytheme_enqueue_news_styles() {
     // 全ての個別ページ（釣果・お知らせ・日記）で統一CSSを読み込む
     if (is_singular('post') || is_singular('news') || is_singular('diary')) {
         wp_enqueue_style('single-post-custom', get_template_directory_uri() . '/css/single-post-custom.css', array(), '1.0.0');
+        // サイドバー用のnews-customも読み込む
+        wp_enqueue_style('news-custom', get_template_directory_uri() . '/css/news-custom.css', array(), '1.0.0');
         
         // 個別ページでもアーカイブJavaScriptを読み込む（サイドバー用）
         wp_enqueue_script('archive-toggle', get_template_directory_uri() . '/js/archive-toggle.js', array(), '1.0.0', true);
@@ -716,7 +718,7 @@ function create_diary_post_type() {
             ),
             'public' => true,
             'has_archive' => true,
-            'rewrite' => false,
+            'rewrite' => array('slug' => 'diary'),
             'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
             'taxonomies' => array('post_tag'),
             'menu_icon' => 'dashicons-edit-page',
@@ -790,46 +792,124 @@ add_action('load-options-permalink.php', function() {
     add_action('admin_notices', 'joemaru_add_flush_button');
 });
 
-// 閲覧数カウント機能
-function joemaru_count_page_views() {
-    // 管理者やボットのアクセスは除外
-    if (is_admin() || is_robots() || is_feed() || is_trackback()) {
-        return;
-    }
-    
-    // Ajaxリクエストは除外
-    if (defined('DOING_AJAX') && DOING_AJAX) {
-        return;
-    }
-    
-    // 今日の日付を取得
-    $today = date('Y-m-d');
-    $yesterday = date('Y-m-d', strtotime('-1 day'));
-    
-    // 総閲覧数を更新
-    $total_views = get_option('joemaru_total_views', 0);
-    $total_views++;
-    update_option('joemaru_total_views', $total_views);
-    
-    // 今日の閲覧数を更新
-    $today_views = get_option('joemaru_today_views_' . $today, 0);
-    $today_views++;
-    update_option('joemaru_today_views_' . $today, $today_views);
-    
-    // 昨日の閲覧数を保存（表示用）
-    $yesterday_views = get_option('joemaru_today_views_' . $yesterday, 0);
-    update_option('joemaru_yesterday_views', $yesterday_views);
-    
-    // 古いデータを削除（30日以上前）
-    $old_date = date('Y-m-d', strtotime('-30 days'));
-    delete_option('joemaru_today_views_' . $old_date);
-}
-add_action('wp', 'joemaru_count_page_views');
+// 独自閲覧数カウント機能を無効化（count-per-dayプラグインに置き換え）
+// function joemaru_count_page_views() {
+//     // 管理者やボットのアクセスは除外
+//     if (is_admin() || is_robots() || is_feed() || is_trackback()) {
+//         return;
+//     }
+//     
+//     // Ajaxリクエストは除外
+//     if (defined('DOING_AJAX') && DOING_AJAX) {
+//         return;
+//     }
+//     
+//     // 今日の日付を取得
+//     $today = date('Y-m-d');
+//     $yesterday = date('Y-m-d', strtotime('-1 day'));
+//     
+//     // 総閲覧数を更新
+//     $total_views = get_option('joemaru_total_views', 0);
+//     $total_views++;
+//     update_option('joemaru_total_views', $total_views);
+//     
+//     // 今日の閲覧数を更新
+//     $today_views = get_option('joemaru_today_views_' . $today, 0);
+//     $today_views++;
+//     update_option('joemaru_today_views_' . $today, $today_views);
+//     
+//     // 昨日の閲覧数を保存（表示用）
+//     $yesterday_views = get_option('joemaru_today_views_' . $yesterday, 0);
+//     update_option('joemaru_yesterday_views', $yesterday_views);
+//     
+//     // 古いデータを削除（30日以上前）
+//     $old_date = date('Y-m-d', strtotime('-30 days'));
+//     delete_option('joemaru_today_views_' . $old_date);
+// }
+// add_action('wp', 'joemaru_count_page_views');
 
-// 閲覧数を取得する関数
 function joemaru_get_page_views() {
-    $today = date('Y-m-d');
+    // Count Per Dayプラグインの標準関数を優先的に使用
+    if (function_exists('cpd_get_all_stats')) {
+        $stats = cpd_get_all_stats();
+        if ($stats && isset($stats['total'])) {
+            $today = date('Y-m-d');
+            $yesterday = date('Y-m-d', strtotime('-1 day'));
+            
+            // プラグインの標準関数で今日と昨日の統計を取得
+            $today_views = function_exists('cpd_get_stats') ? cpd_get_stats($today) : 0;
+            $yesterday_views = function_exists('cpd_get_stats') ? cpd_get_stats($yesterday) : 0;
+            
+            return array(
+                'total' => (int)$stats['total'],
+                'today' => (int)$today_views,
+                'yesterday' => (int)$yesterday_views
+            );
+        }
+    }
     
+    // Count Per Dayプラグインのデータベースから直接取得を試行
+    global $wpdb;
+    
+    // Count Per Dayのテーブル名（複数の可能性を試行）
+    $possible_tables = array(
+        $wpdb->prefix . 'cpd_counter',
+        $wpdb->prefix . 'count_per_day',
+        $wpdb->prefix . 'cpd_counterdata'
+    );
+    
+    $cpd_table = null;
+    foreach ($possible_tables as $table) {
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table'") == $table) {
+            $cpd_table = $table;
+            break;
+        }
+    }
+    
+    // テーブルが見つかった場合はデータを取得
+    if ($cpd_table) {
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', strtotime('-1 day'));
+        
+        // テーブル構造を確認して適切なクエリを実行
+        $columns = $wpdb->get_results("DESCRIBE $cpd_table");
+        $count_column = 'count';
+        $date_column = 'date';
+        
+        // カラム名を確認
+        foreach ($columns as $column) {
+            if (strpos($column->Field, 'count') !== false) {
+                $count_column = $column->Field;
+            }
+            if (strpos($column->Field, 'date') !== false) {
+                $date_column = $column->Field;
+            }
+        }
+        
+        // 総閲覧数を取得
+        $total_views = $wpdb->get_var("SELECT SUM($count_column) FROM $cpd_table");
+        
+        // 今日の閲覧数を取得
+        $today_views = $wpdb->get_var($wpdb->prepare(
+            "SELECT SUM($count_column) FROM $cpd_table WHERE $date_column = %s", 
+            $today
+        ));
+        
+        // 昨日の閲覧数を取得
+        $yesterday_views = $wpdb->get_var($wpdb->prepare(
+            "SELECT SUM($count_column) FROM $cpd_table WHERE $date_column = %s", 
+            $yesterday
+        ));
+        
+        return array(
+            'total' => (int)$total_views,
+            'today' => (int)$today_views,
+            'yesterday' => (int)$yesterday_views
+        );
+    }
+    
+    // プラグインが無効またはデータが取得できない場合は既存データを返す
+    $today = date('Y-m-d');
     $total_views = get_option('joemaru_total_views', 0);
     $today_views = get_option('joemaru_today_views_' . $today, 0);
     $yesterday_views = get_option('joemaru_yesterday_views', 0);
@@ -841,15 +921,10 @@ function joemaru_get_page_views() {
     );
 }
 
-// 初期値設定（テーマ有効化時）
+// Count Per Dayプラグイン用初期設定（テーマ有効化時）
 function joemaru_init_page_views() {
-    // 既存の値がない場合のみ初期値を設定
-    if (get_option('joemaru_total_views') === false) {
-        update_option('joemaru_total_views', 1118600); // 既存の総閲覧数
-    }
-    if (get_option('joemaru_yesterday_views') === false) {
-        update_option('joemaru_yesterday_views', 453); // 既存の昨日の閲覧数
-    }
+    // Count Per Dayプラグインを使用するため、独自データベース初期化は不要
+    // プラグインが管理するため、この関数は空にする
 }
 add_action('after_switch_theme', 'joemaru_init_page_views');
 
@@ -863,36 +938,74 @@ function joemaru_add_dashboard_widget() {
 }
 add_action('wp_dashboard_setup', 'joemaru_add_dashboard_widget');
 
-// ダッシュボードウィジェットの内容
+// ダッシュボードウィジェットの内容（Count Per Day対応）
 function joemaru_dashboard_widget_content() {
     $page_views = joemaru_get_page_views();
     $today = date('Y年n月j日');
     $yesterday = date('Y年n月j日', strtotime('-1 day'));
     
     echo '<div style="padding: 10px;">';
-    echo '<h4>📊 閲覧数統計</h4>';
-    echo '<table style="width: 100%; border-collapse: collapse;">';
-    echo '<tr style="border-bottom: 1px solid #ddd;"><td style="padding: 8px;"><strong>総閲覧数</strong></td><td style="padding: 8px; text-align: right;"><strong>' . number_format($page_views['total']) . '</strong></td></tr>';
-    echo '<tr style="border-bottom: 1px solid #ddd;"><td style="padding: 8px;">今日の閲覧数 (' . $today . ')</td><td style="padding: 8px; text-align: right;">' . number_format($page_views['today']) . '</td></tr>';
-    echo '<tr><td style="padding: 8px;">昨日の閲覧数 (' . $yesterday . ')</td><td style="padding: 8px; text-align: right;">' . number_format($page_views['yesterday']) . '</td></tr>';
-    echo '</table>';
-    echo '<p style="margin-top: 15px; font-size: 12px; color: #666;">※ 管理者のアクセスは除外されています</p>';
+    echo '<h4>📊 閲覧数統計（Count Per Day）</h4>';
+    
+    // Count Per Dayプラグインが有効かチェック
+    if (function_exists('cpd_get_all_stats')) {
+        echo '<table style="width: 100%; border-collapse: collapse;">';
+        echo '<tr style="border-bottom: 1px solid #ddd;"><td style="padding: 8px;"><strong>総閲覧数</strong></td><td style="padding: 8px; text-align: right;"><strong>' . number_format($page_views['total']) . '</strong></td></tr>';
+        echo '<tr style="border-bottom: 1px solid #ddd;"><td style="padding: 8px;">今日の閲覧数 (' . $today . ')</td><td style="padding: 8px; text-align: right;">' . number_format($page_views['today']) . '</td></tr>';
+        echo '<tr><td style="padding: 8px;">昨日の閲覧数 (' . $yesterday . ')</td><td style="padding: 8px; text-align: right;">' . number_format($page_views['yesterday']) . '</td></tr>';
+        echo '</table>';
+        echo '<p style="margin-top: 15px; font-size: 12px; color: #666;">※ Count Per Dayプラグインのデータを使用</p>';
+        
+        // プラグイン設定へのリンクを追加
+        echo '<p style="margin-top: 10px;"><a href="' . admin_url('admin.php?page=count-per-day') . '" style="text-decoration: none;">📈 詳細統計を見る</a></p>';
+        
+        // デバッグ情報を追加（管理者のみ表示）
+        if (current_user_can('manage_options')) {
+            echo '<div style="margin-top: 15px; padding: 10px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px;">';
+            echo '<h5 style="margin: 0 0 10px 0; color: #495057;">🔧 デバッグ情報</h5>';
+            echo '<p style="margin: 5px 0; font-size: 12px;"><strong>プラグイン関数:</strong> ' . (function_exists('cpd_get_all_stats') ? '有効' : '無効') . '</p>';
+            echo '<p style="margin: 5px 0; font-size: 12px;"><strong>今日の日付:</strong> ' . date('Y-m-d') . '</p>';
+            echo '<p style="margin: 5px 0; font-size: 12px;"><strong>昨日の日付:</strong> ' . date('Y-m-d', strtotime('-1 day')) . '</p>';
+            
+            // プラグインの生データを確認
+            if (function_exists('cpd_get_all_stats')) {
+                $raw_stats = cpd_get_all_stats();
+                echo '<p style="margin: 5px 0; font-size: 12px;"><strong>生データ:</strong> ' . print_r($raw_stats, true) . '</p>';
+            }
+            echo '</div>';
+        }
+    } else {
+        echo '<div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; padding: 10px; margin-bottom: 10px;">';
+        echo '<p style="margin: 0; color: #856404;"><strong>⚠️ Count Per Dayプラグインが無効です</strong></p>';
+        echo '<p style="margin: 5px 0 0 0; font-size: 12px; color: #856404;">プラグインを有効化すると、より詳細な統計が利用できます。</p>';
+        echo '</div>';
+        
+        // 既存データがあれば表示
+        if ($page_views['total'] > 0) {
+            echo '<table style="width: 100%; border-collapse: collapse;">';
+            echo '<tr style="border-bottom: 1px solid #ddd;"><td style="padding: 8px;"><strong>総閲覧数（旧データ）</strong></td><td style="padding: 8px; text-align: right;"><strong>' . number_format($page_views['total']) . '</strong></td></tr>';
+            echo '<tr style="border-bottom: 1px solid #ddd;"><td style="padding: 8px;">今日の閲覧数 (' . $today . ')</td><td style="padding: 8px; text-align: right;">' . number_format($page_views['today']) . '</td></tr>';
+            echo '<tr><td style="padding: 8px;">昨日の閲覧数 (' . $yesterday . ')</td><td style="padding: 8px; text-align: right;">' . number_format($page_views['yesterday']) . '</td></tr>';
+            echo '</table>';
+            echo '<p style="margin-top: 15px; font-size: 12px; color: #666;">※ 旧システムのデータです</p>';
+        }
+    }
+    
     echo '</div>';
 }
-
-// 閲覧数リセット機能（必要に応じて）
-function joemaru_reset_page_views() {
-    if (isset($_GET['reset_views']) && $_GET['reset_views'] === '1' && current_user_can('manage_options')) {
-        update_option('joemaru_total_views', 0);
-        $today = date('Y-m-d');
-        update_option('joemaru_today_views_' . $today, 0);
-        update_option('joemaru_yesterday_views', 0);
+// 閲覧数リセット機能を無効化（Count Per Dayプラグインを使用）
+// function joemaru_reset_page_views() {
+//     if (isset($_GET['reset_views']) && $_GET['reset_views'] === '1' && current_user_can('manage_options')) {
+//         update_option('joemaru_total_views', 0);
+//         $today = date('Y-m-d');
+//         update_option('joemaru_today_views_' . $today, 0);
+//         update_option('joemaru_yesterday_views', 0);
         
-        wp_redirect(admin_url('index.php?views_reset=1'));
-        exit;
-    }
-}
-add_action('admin_init', 'joemaru_reset_page_views');
+//         wp_redirect(admin_url('index.php?views_reset=1'));
+//         exit;
+//     }
+// }
+// add_action('admin_init', 'joemaru_reset_page_views');
 
 // Facebook SDK読み込み（改良版）
 function joemaru_enqueue_facebook_sdk() {
@@ -1073,7 +1186,7 @@ function joemaru_custom_meta_tags() {
         <meta property="og:type" content="website">
         <meta property="og:title" content="<?php echo esc_attr($meta_data['title']); ?>">
         <meta property="og:description" content="<?php echo esc_attr($meta_data['description']); ?>">
-        <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/images/h1-icon.png">
+        <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/images/insta-fish.jpg">
         <meta property="og:url" content="<?php echo esc_url($meta_data['canonical']); ?>">
         
         <?php if (is_front_page()) : ?>
@@ -1668,4 +1781,610 @@ function joemaru_get_facebook_data() {
     set_transient($cache_key, $result, 12 * HOUR_IN_SECONDS);
     
     return $result;
+}
+
+// 自動アイキャッチ画像設定機能
+function joemaru_auto_set_featured_image($post_id) {
+    // 自動保存やリビジョンは除外
+    if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
+        return;
+    }
+    
+    // 既にアイキャッチ画像が設定されている場合は処理しない
+    if (has_post_thumbnail($post_id)) {
+        return;
+    }
+    
+    // 投稿タイプが post, news, diary のみ対象
+    $post_type = get_post_type($post_id);
+    if (!in_array($post_type, array('post', 'news', 'diary'))) {
+        return;
+    }
+    
+    // 投稿内容を取得
+    $post = get_post($post_id);
+    $content = $post->post_content;
+    
+    // 投稿内容から最初の画像のURLを抽出
+    $first_image = joemaru_get_first_image_from_content($content);
+    
+    if ($first_image) {
+        // 画像URLから添付ファイルIDを取得
+        $attachment_id = joemaru_get_attachment_id_by_url($first_image);
+        
+        if ($attachment_id) {
+            // アイキャッチ画像として設定
+            set_post_thumbnail($post_id, $attachment_id);
+        }
+    }
+}
+
+// 投稿保存時にアイキャッチ画像を自動設定
+add_action('save_post', 'joemaru_auto_set_featured_image');
+
+// 投稿内容から最初の画像URLを取得する関数
+function joemaru_get_first_image_from_content($content) {
+    // WordPressの画像ブロック（Gutenberg）から抽出
+    if (preg_match('/<!-- wp:image.*?-->(.*?)<!-- \/wp:image -->/s', $content, $matches)) {
+        if (preg_match('/<img[^>]+src="([^"]+)"/', $matches[1], $img_matches)) {
+            return $img_matches[1];
+        }
+    }
+    
+    // 通常のimgタグから抽出
+    if (preg_match('/<img[^>]+src="([^"]+)"/i', $content, $matches)) {
+        return $matches[1];
+    }
+    
+    // WordPressのメディア添付ファイルURLパターンから抽出
+    if (preg_match('/wp-content\/uploads\/[^"\s]+\.(jpg|jpeg|png|gif|webp)/i', $content, $matches)) {
+        return $matches[0];
+    }
+    
+    return false;
+}
+
+// 画像URLから添付ファイルIDを取得する関数
+function joemaru_get_attachment_id_by_url($image_url) {
+    global $wpdb;
+    
+    // 相対URLの場合は絶対URLに変換
+    if (strpos($image_url, 'http') !== 0) {
+        $image_url = home_url($image_url);
+    }
+    
+    // データベースから添付ファイルIDを検索
+    $attachment_id = $wpdb->get_var($wpdb->prepare(
+        "SELECT ID FROM {$wpdb->posts} WHERE guid = %s AND post_type = 'attachment'",
+        $image_url
+    ));
+    
+    if (!$attachment_id) {
+        // ファイル名のみで検索を試行
+        $filename = basename($image_url);
+        $attachment_id = $wpdb->get_var($wpdb->prepare(
+            "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_wp_attached_file' AND meta_value LIKE %s",
+            '%' . $wpdb->esc_like($filename)
+        ));
+    }
+    
+    return $attachment_id;
+}
+
+// 既存投稿にアイキャッチ画像を一括設定する関数（管理画面で手動実行用）
+function joemaru_bulk_set_featured_images() {
+    // 管理者権限チェック
+    if (!current_user_can('manage_options')) {
+        wp_die('権限がありません');
+    }
+    
+    // アイキャッチ画像が設定されていない投稿を取得
+    $posts = get_posts(array(
+        'post_type' => array('post', 'news', 'diary'),
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_thumbnail_id',
+                'compare' => 'NOT EXISTS'
+            )
+        )
+    ));
+    
+    $updated_count = 0;
+    
+    foreach ($posts as $post) {
+        // 投稿内容から最初の画像を取得
+        $first_image = joemaru_get_first_image_from_content($post->post_content);
+        
+        if ($first_image) {
+            $attachment_id = joemaru_get_attachment_id_by_url($first_image);
+            
+            if ($attachment_id) {
+                set_post_thumbnail($post->ID, $attachment_id);
+                $updated_count++;
+            }
+        }
+    }
+    
+    // 結果をメッセージで表示
+    add_action('admin_notices', function() use ($updated_count) {
+        echo '<div class="notice notice-success is-dismissible">';
+        echo '<p>' . $updated_count . '件の投稿にアイキャッチ画像を設定しました。</p>';
+        echo '</div>';
+    });
+}
+
+// 管理画面にアイキャッチ一括設定ボタンを追加
+function joemaru_add_bulk_featured_image_button() {
+    add_management_page(
+        'アイキャッチ画像一括設定',
+        'アイキャッチ一括設定',
+        'manage_options',
+        'bulk-featured-images',
+        'joemaru_bulk_featured_images_page'
+    );
+}
+add_action('admin_menu', 'joemaru_add_bulk_featured_image_button');
+
+// 管理画面ページの表示
+function joemaru_bulk_featured_images_page() {
+    if (isset($_POST['bulk_set_featured_images']) && wp_verify_nonce($_POST['bulk_featured_nonce'], 'bulk_set_featured_images')) {
+        joemaru_bulk_set_featured_images();
+    }
+    
+    // アイキャッチなしの投稿数を取得
+    $posts_without_thumbnail = get_posts(array(
+        'post_type' => array('post', 'news', 'diary'),
+        'post_status' => 'publish',
+        'numberposts' => -1,
+        'meta_query' => array(
+            array(
+                'key' => '_thumbnail_id',
+                'compare' => 'NOT EXISTS'
+            )
+        ),
+        'fields' => 'ids'
+    ));
+    
+    $count = count($posts_without_thumbnail);
+    ?>
+    <div class="wrap">
+        <h1>アイキャッチ画像一括設定</h1>
+        <p>記事内の最初の画像を自動的にアイキャッチ画像として設定します。</p>
+        
+        <div class="notice notice-info">
+            <p><strong>対象投稿数:</strong> <?php echo $count; ?>件</p>
+            <p>アイキャッチ画像が設定されていない投稿（釣果・お知らせ・日記）が対象です。</p>
+        </div>
+        
+        <?php if ($count > 0) : ?>
+            <form method="post" onsubmit="return confirm('<?php echo $count; ?>件の投稿を処理します。実行しますか？');">
+                <?php wp_nonce_field('bulk_set_featured_images', 'bulk_featured_nonce'); ?>
+                <p class="submit">
+                    <input type="submit" name="bulk_set_featured_images" class="button-primary" value="アイキャッチ画像を一括設定">
+                </p>
+            </form>
+        <?php else : ?>
+            <p>アイキャッチ画像が未設定の投稿はありません。</p>
+        <?php endif; ?>
+        
+        <h2>機能説明</h2>
+        <ul>
+            <li>新しく投稿を作成・更新する際、記事内に画像があればアイキャッチ画像として自動設定されます</li>
+            <li>既にアイキャッチ画像が設定されている投稿は変更されません</li>
+            <li>記事内の最初に出現する画像が使用されます</li>
+            <li>Gutenbergエディタとクラシックエディタの両方に対応しています</li>
+        </ul>
+    </div>
+<?php
+}
+/**
+ * PDF管理機能
+ * フッターの業務規程PDFをCMS上で管理できるようにする
+ */
+
+// PDF管理用のカスタムフィールドを追加
+function joemaru_add_pdf_management_fields() {
+    add_settings_section(
+        'pdf_management_section',
+        'PDF管理設定',
+        'joemaru_pdf_management_section_callback',
+        'general'
+    );
+
+    add_settings_field(
+        'footer_pdf_file',
+        '業務規程PDFファイル',
+        'joemaru_footer_pdf_field_callback',
+        'general',
+        'pdf_management_section'
+    );
+
+    register_setting('general', 'footer_pdf_file');
+}
+add_action('admin_init', 'joemaru_add_pdf_management_fields');
+
+// PDF管理セクションの説明
+function joemaru_pdf_management_section_callback() {
+    echo '<p>フッターに表示される業務規程PDFファイルを管理します。ファイルをアップロードすると、既存のファイルが自動的に置き換えられます。</p>';
+}
+
+// PDFファイルアップロードフィールド
+function joemaru_footer_pdf_field_callback() {
+    $current_pdf = get_option('footer_pdf_file');
+    
+    echo '<div class="pdf-upload-container">';
+    
+    // 現在のPDFファイルの表示
+    if ($current_pdf) {
+        $pdf_url = wp_get_attachment_url($current_pdf);
+        $pdf_filename = basename($pdf_url);
+        echo '<div class="current-pdf-info">';
+        echo '<strong>現在のPDF:</strong> ';
+        echo '<a href="' . esc_url($pdf_url) . '" target="_blank">' . esc_html($pdf_filename) . '</a>';
+        echo ' <a href="' . esc_url($pdf_url) . '" download class="button button-small">ダウンロード</a>';
+        echo '</div>';
+    } else {
+        echo '<div class="current-pdf-info">';
+        echo '<strong>現在のPDF:</strong> 設定されていません';
+        echo '</div>';
+    }
+    
+    echo '<br>';
+    
+    // ファイルアップロードフィールド
+    echo '<input type="file" name="footer_pdf_upload" id="footer_pdf_upload" accept=".pdf" />';
+    echo '<input type="hidden" name="footer_pdf_file" id="footer_pdf_file" value="' . esc_attr($current_pdf) . '" />';
+    
+    echo '<p class="description">PDFファイルを選択してアップロードしてください。既存のファイルは自動的に置き換えられます。</p>';
+    
+    echo '</div>';
+    
+    // JavaScript for file upload handling
+    echo '<script>
+    jQuery(document).ready(function($) {
+        $("#footer_pdf_upload").on("change", function() {
+            var file = this.files[0];
+            if (file) {
+                var formData = new FormData();
+                formData.append("action", "upload_footer_pdf");
+                formData.append("footer_pdf_file", file);
+                formData.append("nonce", "' . wp_create_nonce('upload_footer_pdf_nonce') . '");
+                
+                $.ajax({
+                    url: ajaxurl,
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            $("#footer_pdf_file").val(response.data.attachment_id);
+                            $(".current-pdf-info").html("<strong>現在のPDF:</strong> " + file.name + " <a href=\"" + response.data.url + "\" target=\"_blank\">" + file.name + "</a> <a href=\"" + response.data.url + "\" download class=\"button button-small\">ダウンロード</a>");
+                            alert("PDFファイルが正常にアップロードされました。");
+                        } else {
+                            alert("エラー: " + response.data);
+                        }
+                    },
+                    error: function() {
+                        alert("アップロード中にエラーが発生しました。");
+                    }
+                });
+            }
+        });
+    });
+    </script>';
+}
+
+// PDFファイルアップロード処理
+function joemaru_upload_footer_pdf() {
+    // セキュリティチェック
+    if (!wp_verify_nonce($_POST['nonce'], 'upload_footer_pdf_nonce')) {
+        wp_die('セキュリティチェックに失敗しました。');
+    }
+    
+    if (!current_user_can('manage_options')) {
+        wp_die('権限がありません。');
+    }
+    
+    // ファイルチェック
+    if (!isset($_FILES['footer_pdf_file']) || $_FILES['footer_pdf_file']['error'] !== UPLOAD_ERR_OK) {
+        wp_send_json_error('ファイルのアップロードに失敗しました。');
+    }
+    
+    $file = $_FILES['footer_pdf_file'];
+    
+    // ファイル形式チェック
+    $allowed_types = array('application/pdf');
+    $file_type = wp_check_filetype($file['name']);
+    
+    if (!in_array($file_type['type'], $allowed_types)) {
+        wp_send_json_error('PDFファイルのみアップロード可能です。');
+    }
+    
+    // ファイルサイズチェック（10MB制限）
+    if ($file['size'] > 10 * 1024 * 1024) {
+        wp_send_json_error('ファイルサイズは10MB以下にしてください。');
+    }
+    
+    // 既存のPDFファイルを削除
+    $existing_pdf = get_option('footer_pdf_file');
+    if ($existing_pdf) {
+        wp_delete_attachment($existing_pdf, true);
+    }
+    
+    // 新しいファイルをアップロード
+    $upload = wp_handle_upload($file, array('test_form' => false));
+    
+    if (isset($upload['error'])) {
+        wp_send_json_error('ファイルのアップロードに失敗しました: ' . $upload['error']);
+    }
+    
+    // メディアライブラリに追加
+    $attachment = array(
+        'post_mime_type' => $upload['type'],
+        'post_title' => sanitize_file_name($file['name']),
+        'post_content' => '',
+        'post_status' => 'inherit'
+    );
+    
+    $attachment_id = wp_insert_attachment($attachment, $upload['file']);
+    
+    if (is_wp_error($attachment_id)) {
+        wp_send_json_error('メディアライブラリへの追加に失敗しました。');
+    }
+    
+    // メタデータを生成
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    $attachment_data = wp_generate_attachment_metadata($attachment_id, $upload['file']);
+    wp_update_attachment_metadata($attachment_id, $attachment_data);
+    
+    // オプションを更新
+    update_option('footer_pdf_file', $attachment_id);
+    
+    wp_send_json_success(array(
+        'attachment_id' => $attachment_id,
+        'url' => $upload['url'],
+        'filename' => $file['name']
+    ));
+}
+add_action('wp_ajax_upload_footer_pdf', 'joemaru_upload_footer_pdf');
+
+// PDFファイルのURLを取得する関数
+function joemaru_get_footer_pdf_url() {
+    $pdf_id = get_option('footer_pdf_file');
+    if ($pdf_id) {
+        return wp_get_attachment_url($pdf_id);
+    }
+    return false;
+}
+
+// PDFファイル名を取得する関数
+function joemaru_get_footer_pdf_filename() {
+    $pdf_id = get_option('footer_pdf_file');
+    if ($pdf_id) {
+        $pdf_url = wp_get_attachment_url($pdf_id);
+        return basename($pdf_url);
+    }
+    return false;
+}
+
+// 管理画面にPDF管理メニューを追加
+function joemaru_add_pdf_management_menu() {
+    // トップレベルメニューとして追加
+    add_menu_page(
+        'PDF管理',
+        'PDF管理',
+        'manage_options',
+        'pdf-management',
+        'joemaru_pdf_management_page',
+        'dashicons-pdf',
+        30
+    );
+    
+    // サブメニューも残す（一般設定内）
+    add_submenu_page(
+        'options-general.php',
+        'PDF管理',
+        'PDF管理',
+        'manage_options',
+        'pdf-management-settings',
+        'joemaru_pdf_management_page'
+    );
+}
+add_action('admin_menu', 'joemaru_add_pdf_management_menu');
+
+// ダッシュボードにPDF管理ウィジェットを追加
+function joemaru_add_pdf_dashboard_widget() {
+    wp_add_dashboard_widget(
+        'pdf_management_widget',
+        '📄 業務規程PDF管理',
+        'joemaru_pdf_dashboard_widget_content'
+    );
+}
+add_action('wp_dashboard_setup', 'joemaru_add_pdf_dashboard_widget');
+
+// ダッシュボードウィジェットの内容
+function joemaru_pdf_dashboard_widget_content() {
+    $current_pdf = get_option('footer_pdf_file');
+    
+    echo '<div style="padding: 10px 0;">';
+    
+    if ($current_pdf) {
+        $pdf_url = wp_get_attachment_url($current_pdf);
+        $pdf_filename = basename($pdf_url);
+        
+        echo '<div style="background: #dff0d8; border: 1px solid #d6e9c6; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
+        echo '<strong>✅ 現在のPDF:</strong> ' . esc_html($pdf_filename);
+        echo '</div>';
+        
+        echo '<p><a href="' . esc_url($pdf_url) . '" target="_blank" class="button button-primary">PDFを確認</a></p>';
+    } else {
+        echo '<div style="background: #f2dede; border: 1px solid #ebccd1; padding: 10px; border-radius: 4px; margin-bottom: 15px;">';
+        echo '<strong>⚠️ 注意:</strong> PDFファイルが設定されていません';
+        echo '</div>';
+    }
+    
+    echo '<p><a href="' . admin_url('admin.php?page=pdf-management') . '" class="button button-secondary">PDF管理ページへ</a></p>';
+    echo '<p><a href="' . admin_url('options-general.php') . '" class="button button-secondary">一般設定で管理</a></p>';
+    
+    echo '</div>';
+}
+
+// 管理バーにPDF管理メニューを追加
+function joemaru_add_pdf_admin_bar_menu($wp_admin_bar) {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    $current_pdf = get_option('footer_pdf_file');
+    $pdf_status = $current_pdf ? '設定済み' : '未設定';
+    
+    // メインメニュー
+    $wp_admin_bar->add_menu(array(
+        'id' => 'pdf-management',
+        'title' => '📄 PDF管理 (' . $pdf_status . ')',
+        'href' => admin_url('admin.php?page=pdf-management'),
+        'meta' => array(
+            'title' => '業務規程PDFファイルを管理'
+        )
+    ));
+    
+    // サブメニュー
+    $wp_admin_bar->add_menu(array(
+        'parent' => 'pdf-management',
+        'id' => 'pdf-management-page',
+        'title' => 'PDF管理ページ',
+        'href' => admin_url('admin.php?page=pdf-management')
+    ));
+    
+    $wp_admin_bar->add_menu(array(
+        'parent' => 'pdf-management',
+        'id' => 'pdf-settings',
+        'title' => '一般設定で管理',
+        'href' => admin_url('options-general.php')
+    ));
+    
+    if ($current_pdf) {
+        $pdf_url = wp_get_attachment_url($current_pdf);
+        $wp_admin_bar->add_menu(array(
+            'parent' => 'pdf-management',
+            'id' => 'pdf-view',
+            'title' => '現在のPDFを確認',
+            'href' => $pdf_url,
+            'meta' => array(
+                'target' => '_blank'
+            )
+        ));
+    }
+}
+add_action('admin_bar_menu', 'joemaru_add_pdf_admin_bar_menu', 100);
+
+// PDF管理ページ用のスタイルを追加
+function joemaru_pdf_management_admin_styles() {
+    $screen = get_current_screen();
+    if ($screen && ($screen->id === 'settings_page_pdf-management' || $screen->id === 'options-general')) {
+        echo '<style>
+        .pdf-upload-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .current-pdf-info {
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .current-pdf-info a {
+            text-decoration: none;
+        }
+        .current-pdf-info .button {
+            margin-left: 10px;
+        }
+        #footer_pdf_upload {
+            margin: 10px 0;
+            padding: 10px;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #footer_pdf_upload:hover {
+            border-color: #0073aa;
+        }
+        .pdf-management-card {
+            background: #fff;
+            border: 1px solid #ccd0d4;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,.04);
+        }
+        .pdf-management-card h2 {
+            margin-top: 0;
+            color: #23282d;
+        }
+        .pdf-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .pdf-status.active {
+            background: #dff0d8;
+            color: #3c763d;
+        }
+        .pdf-status.inactive {
+            background: #f2dede;
+            color: #a94442;
+        }
+        </style>';
+    }
+}
+add_action('admin_head', 'joemaru_pdf_management_admin_styles');
+
+// PDF管理ページの内容
+function joemaru_pdf_management_page() {
+    if (!current_user_can('manage_options')) {
+        wp_die('権限がありません。');
+    }
+    
+    echo '<div class="wrap">';
+    echo '<h1>PDF管理</h1>';
+    echo '<p>フッターに表示される業務規程PDFファイルを管理します。</p>';
+    
+    $current_pdf = get_option('footer_pdf_file');
+    
+    if ($current_pdf) {
+        $pdf_url = wp_get_attachment_url($current_pdf);
+        $pdf_filename = basename($pdf_url);
+        
+        echo '<div class="pdf-management-card">';
+        echo '<h2>現在のPDFファイル</h2>';
+        echo '<p><span class="pdf-status active">アクティブ</span></p>';
+        echo '<p><strong>ファイル名:</strong> ' . esc_html($pdf_filename) . '</p>';
+        echo '<p><strong>URL:</strong> <a href="' . esc_url($pdf_url) . '" target="_blank">' . esc_url($pdf_url) . '</a></p>';
+        echo '<p><a href="' . esc_url($pdf_url) . '" download class="button button-primary">PDFをダウンロード</a></p>';
+        echo '</div>';
+    } else {
+        echo '<div class="pdf-management-card">';
+        echo '<h2>現在のPDFファイル</h2>';
+        echo '<p><span class="pdf-status inactive">未設定</span></p>';
+        echo '<p>PDFファイルが設定されていません。デフォルトのPDFファイルが表示されます。</p>';
+        echo '</div>';
+    }
+    
+    echo '<div class="pdf-management-card">';
+    echo '<h2>PDFファイルの更新</h2>';
+    echo '<p>新しいPDFファイルをアップロードするには、<a href="' . admin_url('options-general.php') . '">一般設定</a>ページの「PDF管理設定」セクションをご利用ください。</p>';
+    echo '<p><a href="' . admin_url('options-general.php') . '" class="button button-secondary">一般設定ページへ</a></p>';
+    echo '</div>';
+    
+    echo '</div>';
 }

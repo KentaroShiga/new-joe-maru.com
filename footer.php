@@ -19,10 +19,10 @@
 				<img src="<?php echo get_template_directory_uri(); ?>/images/lines.png" alt="bar" />
 			</div>
 			<div class="access-desc">丈丸渡船では賀田湾内に設置した、１０m〜２８mまで、様々な水深のカセをご案内しております。チヌ、真鯛から、青物、ヒラメ、アオリイカなど、お客様のご要望に応じてご案内させていただきます。</div>
-					<div class="access-map-area">
+			<div class="access-map-area">
 			<div class="access-map" id="footer-map">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5291.0072789545475!2d136.20333007711932!3d33.96596897318979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600678010e90ac39%3A0x2587f5260111125c!2z5LiI5Li45rih6Ii5!5e1!3m2!1sja!2sjp!4v1747218634048!5m2!1sja!2sjp&maptype=roadmap" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-			</div>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5291.0072789545475!2d136.20333007711932!3d33.96596897318979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600678010e90ac39%3A0x2587f5260111125c!2z5LiI5Li45rih6Ii5!5e1!3m2!1sja!2sjp!4v1747218634048!5m2!1sja!2sjp&maptype=roadmap" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+				</div>
 				<div class="access-map-side">
 					<div class="access-tel-btns">
 						<a class="access-tel-btn" href="tel:090-1417-9322">
@@ -58,16 +58,17 @@
 			<div class="footer-col footer-col--info">
 				<div class="footer-title">丈丸渡船</div>
 				<div>船頭：村田丈幸<br>若船頭：村田京<br>〒519-3924 三重県尾鷲市曽根町149番地<br>090-1417-9322（村田丈幸） <br>080-2628-2183（村田京）</div>
-				<div class="footer-count-title">COUNT PER DAY</div>
-				<?php $page_views = joemaru_get_page_views(); ?>
-				<ul class="footer-count-list">
-					<li>・総閲覧数：<span><?php echo number_format($page_views['total']); ?></span></li>
-					<li>・今日の閲覧数：<span><?php echo number_format($page_views['today']); ?></span></li>
-					<li>・昨日の閲覧数：<span><?php echo number_format($page_views['yesterday']); ?></span></li>
-				</ul>
 				<div class="footer-rule-title">業務規程・規約</div>
 				<ul class="footer-rule-list">
-					<li><a href="<?php echo get_template_directory_uri(); ?>/images/業務規程_6273.pdf" download="業務規程_6273.pdf" target="_blank">・ダウンロードはコチラ</a></li>
+										<?php
+					$pdf_url = joemaru_get_footer_pdf_url();
+					$pdf_filename = joemaru_get_footer_pdf_filename();
+					if ($pdf_url && $pdf_filename) {
+						echo '<li><a href="' . esc_url($pdf_url) . '" download="' . esc_attr($pdf_filename) . '" target="_blank">・ダウンロードはコチラ</a></li>';
+					} else {
+						echo '<li><a href="' . get_template_directory_uri() . '/images/業務規程_6273.pdf" download="業務規程_6273.pdf" target="_blank">・ダウンロードはコチラ</a></li>';
+					}
+					?>
 				</ul>
 			</div>
 			<div class="footer-col footer-col--menu">
@@ -91,7 +92,7 @@
 				<ul class="footer-menu">
 					<li><a href="<?php echo esc_url($access_url); ?>">アクセス</a></li>
 					<li><a href="<?php echo esc_url($captain_url); ?>">船長紹介</a></li>
-					<li><a href="<?php echo home_url('?post_type=diary'); ?>">きょうの日記</a></li>
+					<li><a href="<?php echo home_url( '/diary/'); ?>">きょうの日記</a></li>
 				</ul>
 			</div>
 		</div>

@@ -53,37 +53,57 @@ body {
 
 /* WordPressの管理バーが表示されている時の調整 */
 .admin-bar .header-custom-bar {
-  top: 32px;
+  top: 32px !important;
 }
 
 /* モバイル時の管理バー高さ調整 */
 @media screen and (max-width: 782px) {
   .admin-bar .header-custom-bar {
-    top: 46px;
+    top: 46px !important;
   }
 }
+
+/* iPhone等の小さなスマホでの管理バー調整 */
+@media screen and (max-width: 600px) {
+  .admin-bar .header-custom-bar {
+    top: 46px !important;
+  }
+}
+
+/* 管理バーが表示されている時のbody調整 */
+.admin-bar body {
+  padding-top: 0 !important;
+}
+
+/* 管理バーが表示されている時のサイト全体の調整 */
+.admin-bar .site {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
 .header-custom-logo {
   width: clamp(120px, 15vw, 194.84px);
   height: auto;
   position: absolute;
   left: 16px;
-  top: 43%;
+  top: 51%;
   transform: translateY(-50%);
 }
 .header-custom-ic {
-  width: clamp(80px, 10vw, 119px);
+  width: 80px;
   height: auto;
   position: absolute;
-  left: 54px;
-  top: 68%;
+  left: 70px;
+  top: 80%;
   transform: translateY(-50%);
   text-align: center;
   color: white;
-  font-size: clamp(10px, 1.2vw, 13px);
+  font-size: 12px;
   font-family: Merriweather, serif;
   font-weight: 400;
   line-height: 1.2;
-  word-wrap: break-word;
+  white-space: nowrap;
+  display: block;
 }
 .header-custom-nav {
   position: absolute;
@@ -320,14 +340,36 @@ body {
 
 /* レスポンシブ対応 */
 @media (max-width: 1200px) {
+  .header-custom-logo {
+    width: 160px;
+    left: 10px;
+  }
+  
+  .header-custom-ic {
+    width: 65px;
+    left: 50px;
+    top: 80%;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  
   .header-custom-nav {
     left: clamp(180px, 20vw, 220px);
-    gap: clamp(6px, 1.2vw, 12px);
+    gap: clamp(4px, 1vw, 10px);
   }
   
   .header-custom-nav a {
-    font-size: clamp(12px, 1.1vw, 14px);
-    padding: clamp(3px, 0.6vw, 6px) clamp(4px, 0.8vw, 8px);
+    font-size: clamp(11px, 1vw, 13px);
+    padding: clamp(2px, 0.5vw, 5px) clamp(3px, 0.7vw, 7px);
+    letter-spacing: 0.4px;
+  }
+  
+  .header-custom-telarea {
+    right: clamp(8px, 1.2vw, 15px);
+  }
+  
+  .header-custom-telnums div {
+    font-size: clamp(13px, 1.5vw, 17px);
   }
 }
 
@@ -359,7 +401,12 @@ body {
   }
   
   .header-custom-ic {
-    display: none;
+    display: block !important;
+    width: 60px;
+    left: 30px;
+    top: 80%;
+    font-size: 9px;
+    white-space: nowrap;
   }
   
   .hamburger-menu {
@@ -374,6 +421,17 @@ body {
 @media (max-width: 768px) {
   .header-custom-bar {
     height: 60px;
+  }
+    .header-custom-logo {
+    width: 130px;
+	}
+  .header-custom-ic {
+    display: block !important;
+    width: 55px;
+    left: 25px;
+    top: 80%;
+    font-size: 8px;
+    white-space: nowrap;
   }
   
   .header-custom-telarea {
@@ -391,6 +449,15 @@ body {
 }
 
 @media (max-width: 480px) {
+  .header-custom-ic {
+    display: block !important;
+    width: 50px;
+    left: 20px;
+    top: 80%;
+    font-size: 7px;
+    white-space: nowrap;
+  }
+  
   .mobile-menu {
     width: 100%;
     right: -100%;
@@ -399,4 +466,43 @@ body {
   .mobile-menu.active {
     right: 0;
   }
-} 
+}
+
+/* 1201px-1340px専用の調整 - メニューと電話番号の干渉を防ぐ */
+@media (max-width: 1340px) and (min-width: 1201px) {
+  .header-custom-logo {
+    width: clamp(110px, 13vw, 170px);
+    left: 12px;
+  }
+  
+  .header-custom-ic {
+    width: 70px;
+    left: 60px;
+    top: 80%;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  
+  .header-custom-nav {
+    left: clamp(200px, 22vw, 240px);
+    gap: clamp(4px, 0.8vw, 8px);
+  }
+  
+  .header-custom-nav a {
+    font-size: clamp(11px, 1vw, 13px);
+    padding: clamp(2px, 0.4vw, 4px) clamp(3px, 0.6vw, 6px);
+    letter-spacing: 0.4px;
+  }
+  
+  .header-custom-telarea {
+    right: clamp(8px, 1.2vw, 15px);
+  }
+  
+  .header-custom-telnums div {
+    font-size: clamp(13px, 1.4vw, 16px);
+  }
+  
+  .header-custom-telicon {
+    width: clamp(18px, 2vw, 25px);
+  }
+}

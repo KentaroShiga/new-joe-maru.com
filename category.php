@@ -11,7 +11,7 @@ get_header(); ?>
 
 <div class="mainvisual mainvisual-news">
     <div>
-        <img src="<?php echo get_template_directory_uri(); ?>/images/blog.png" alt="メインビジュアル" />
+        <img src="<?php echo get_template_directory_uri(); ?>/images/blog.webp" alt="メインビジュアル" />
         <div class="mainvisual-overlay"></div>
         <h1 class="news-title"><?php echo esc_html(single_cat_title('', false)); ?>の記事一覧</h1>
     </div>

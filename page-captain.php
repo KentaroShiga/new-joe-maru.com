@@ -8,13 +8,13 @@ get_header();
 <div class="captain-bg">
   <div class="captain-container">
     <div class="captain-title-row">
-      <span class="captain-title-main">Captain's</h1>
-      <span class="captain-title-message">MESSAGE</h2>
+      <span class="captain-title-main">Captain's</span>
+      <span class="captain-title-message">MESSAGE</span>
     </div>
-    <h1 class="captain-subtitle">船長紹介</div>
+    <h1 class="captain-subtitle">船長紹介</h1>
     <div class="captain-main-row">
       <div class="captain-image-area">
-        <img class="captain-image" src="<?php echo get_template_directory_uri(); ?>/images/captain-new.jpg" alt="船長写真">
+        <img class="captain-image" src="<?php echo get_template_directory_uri(); ?>/images/captain-new.webp" alt="船長写真">
         <div class="captain-message-vertical">MESSAGE</div>
       </div>
       <div class="captain-catch">「この海と生きる。この海で迎える。」<br>賀田湾の四季を知り尽くすベテラン船頭・村田が、今日も皆さまをあたたかくお迎えします。</div>

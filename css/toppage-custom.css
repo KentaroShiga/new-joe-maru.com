@@ -90,7 +90,7 @@
 }
 .toppage-section-cards-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 360px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 360px), 50%));
   gap: clamp(20px, 3vw, 40px);
   justify-content: center;
 }
@@ -125,7 +125,7 @@
 }
 @media screen and (max-width: 767px) {
   .toppage-section-cards-content {
-    grid-template-columns: 1fr;
+    grid-template-columns: 50%;
   }
 }
 .toppage-cards-row {
@@ -367,8 +367,8 @@
   margin-bottom: 32px;
 }
 .about-image {
-  width: 642px;
-  height: 487px;
+  width: 580px;
+  height: 440px;
   object-fit: cover;
   border-radius: 0;
   display: block;
@@ -470,7 +470,7 @@
 /* 一覧ページでは2列レイアウト */
 .news-container .latest-catch-cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
   gap: 30px;
   justify-content: center;
   margin: 40px auto 0 auto;
@@ -494,6 +494,11 @@
   margin-right: 0;
   transition: all 0.3s ease;
   cursor: pointer;
+}
+
+/* トップページの新着釣果カードは高さを増やす */
+.toppage-latest-catch .latest-catch-card {
+  height: 440px;
 }
 .latest-catch-card:hover {
   transform: translateY(-8px);
@@ -541,10 +546,10 @@
   transform: scale(1.02);
 }
 .latest-catch-card-title {
-  width: 351px;
+  width: 340px;
   min-height: 30px;
   max-height: 60px;
-  margin: 15px auto 0 auto;
+  margin: 15px 15px 0 15px;
   color: #202124;
   font-size: 18px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -574,9 +579,9 @@
   margin-top: 5px;
 }
 .latest-catch-card-desc {
-  width: 355px;
+  width: 328px;
   height: 81px; /* 3行分の高さ (27px × 3行 = 81px) */
-  margin: 10px auto 0 auto;
+  margin: 10px 15px 20px 15px;
   color: #3C4043;
   font-size: 15px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -722,9 +727,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 20px 0 0 0;
+  padding: 0;
 }
 .price-card-header--kase { background: #7E7E7E; }
 .price-card-header--charter { background: #7E7E7E; }
@@ -744,7 +749,7 @@
   font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
-  margin: -32px auto 0 auto;
+  margin: 0 auto;
   display: block;
   text-align: center;
   position: relative;
@@ -830,7 +835,7 @@
   font-family: 'Noto Serif JP', serif;
   font-weight: 400;
   line-height: 64px;
-  margin-top: 20px;
+  margin: 0;
   display: inline-block;
   transition: all 0.3s ease;
 }
@@ -977,7 +982,9 @@
   .toppage-mainvisual {
     margin-top: 60px; /* モバイルでのヘッダー高さ */
   }
-  
+  .price-title {
+	  font-size: 20px;
+	}
   .toppage-cards-row:first-child .toppage-card,
   .toppage-cards-row:last-child .toppage-card {
     width: 100%;
@@ -1004,9 +1011,9 @@
 
   /* アーカイブページのスマホ表示：1カラム縦並び */
   .news-container .latest-catch-cards {
-    grid-template-columns: 1fr;
+	grid-template-columns: 50%;
     gap: 20px;
-    padding: 0 20px;
+    padding: 0 22px;
     max-width: none;
   }
   
@@ -1039,7 +1046,12 @@
     margin: 0 auto 20px auto;
     gap: 16px;
   }
-
+	.price-title-area {
+        width: 200px;
+        height: 50px;
+    margin: 20px auto 20px auto;
+    gap: 16px;
+	}
   /* about-titleのフォントサイズ縮小 */
   .about-title {
     font-size: 32px;
@@ -1159,10 +1171,15 @@
   }
 
   .latest-catch-card {
-    width: 378px;
-    min-width: 378px;
+/*     width: 378px; */
+    min-width: 355px;
     flex-shrink: 0;
     scroll-snap-align: start;
+  }
+  
+  /* トップページの新着釣果カードは高さを増やす（モバイル版） */
+  .toppage-latest-catch .latest-catch-card {
+    height: 440px;
   }
 
   /* 新着釣果セクションのスクロールバーのスタイリング */
@@ -1218,4 +1235,63 @@
   font-family: 'Noto Serif JP', serif;
   font-weight: 700;
   text-align: center;
-} 
+}
+
+/* 1200px以下でabout-imageのスマホ表示に切り替え */
+@media (max-width: 1200px) {
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .about-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 380px;
+    opacity: 0.15;
+    z-index: 1;
+    margin-top: 0;
+  }
+
+  .about-text {
+    width: 100%;
+    max-width: 800px;
+    font-size: 16px;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+}
+
+/* 480px以下のスマホ表示 */
+@media (max-width: 480px) {
+  /* アーカイブページのより小さいスマホ表示：1カラム縦並び */
+  .news-container .latest-catch-cards {
+    grid-template-columns: 1fr;
+    padding: 30px 15px 0;
+    max-width: 400px; /* より小さい画面では最大幅を小さく */
+    margin: 0 auto; /* 左右中央揃え */
+    justify-items: center; /* グリッドアイテムを中央揃え */
+  }
+  
+  .news-container .latest-catch-card {
+    width: 100%;
+    max-width: 350px; /* より小さい画面では最大幅を小さく */
+    margin: 0 auto; /* 左右中央揃え */
+  }
+}
+@media (max-width: 400px) {
+	.news-container .latest-catch-cards {
+		margin-left: 5px;
+	}
+}
+/* レスポンシブ対応 */ 

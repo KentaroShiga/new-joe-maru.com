@@ -1,7 +1,7 @@
 <?php
 /**
  * The template for displaying archive pages (catch archive)
- *
+ * Template Name: 釣果
  * @package JOEMARU
  * @subpackage JOEMARU
  * @since JOEMARU 1.0
@@ -11,7 +11,7 @@ get_header(); ?>
 
 <div class="mainvisual">
     <div>
-        <img src="<?php echo get_template_directory_uri(); ?>/images/tyoka.png" alt="メインビジュアル" />
+        <img src="<?php echo get_template_directory_uri(); ?>/images/tyoka.webp" alt="メインビジュアル" />
         <h1 class="news-title">釣果</h1>
         <div class="mainvisual-caption">過去の釣果をご紹介</div>
     </div>
@@ -31,7 +31,7 @@ get_header(); ?>
                                 </a>
                             <?php else : ?>
                                 <a href="<?php the_permalink(); ?>">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/fish.png" alt="<?php the_title(); ?>" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/eye_catch.png" alt="<?php the_title(); ?>" />
                                 </a>
                             <?php endif; ?>
                         </div>

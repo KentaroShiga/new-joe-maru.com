@@ -18,6 +18,7 @@
 }
 
 .captain-mainvisual img {
+ transform: rotate(90deg); /* 時計回りに90度回転 */
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -48,10 +49,15 @@
   position: relative;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   margin-top: 57px;
   margin-bottom: 0;
+}
+
+/* アクセスページのマップボタンを右に配置 */
+.page-template-page-access .captain-title-row {
+  justify-content: space-between;
 }
 .captain-title-main {
   font-size: clamp(36px, 5vw, 72px);
@@ -73,9 +79,7 @@
   font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
-  margin-top: 9px;
   margin-bottom: 32px;
-  margin-left: 20px;
 }
 .captain-main-row {
   position: relative;
@@ -199,6 +203,13 @@
     align-items: flex-start;
     gap: 16px;
   }
+  
+  /* アクセスページのみ横並びを維持してボタンを右に配置 */
+  .page-template-page-access .captain-title-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
   .captain-catch {
     width: 90%;
     padding-left: 5vw;
@@ -246,6 +257,13 @@
 }
 
 @media (max-width: 480px) {
+  /* アクセスページのマップボタンを右に配置（スマホでも維持） */
+  .page-template-page-access .captain-title-row {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+  }
+  
   .captain-message-vertical {
     top: 25vw; /* 小さなスマホでさらに上に */
     font-size: clamp(50px, 12vw, 80px);
@@ -305,6 +323,14 @@
   .access-map {
     margin: 5px auto;
   }
+	  /* 料金ページのcaptain-bgだけスマホ表示で高さ制限 */
+  .page-template-page-price .captain-bg {
+    max-height: 650px;
+	  min-height: 0px;
+  }
+	.page-template-page-price .captain-greeting {
+		margin: 40px 0;
+	}
 }
 
 @media (max-width: 480px) {

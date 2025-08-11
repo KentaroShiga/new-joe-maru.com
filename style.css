@@ -4357,7 +4357,9 @@ p > video {
 		padding-right: 12px;
 	}
 }
-
+.archive-year-header, archive-month-item {
+	padding-left: 10px;
+}
 /* スクリーンリーダー専用クラス */
 .sr-only {
     position: absolute !important;

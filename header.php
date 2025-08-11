@@ -22,7 +22,7 @@
 	<meta property="og:url" content="<?php echo esc_url( home_url( '/' ) ); ?>">
 	<meta property="og:title" content="<?php bloginfo( 'name' ); ?>">
 	<meta property="og:description" content="<?php bloginfo( 'description' ); ?>">
-	<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/images/logo.png">
+	<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/images/insta-fish.jpg">
 	<meta property="og:locale" content="ja_JP">
 	
 	<?php if ( is_singular() && pings_open( get_queried_object() ) ) : ?>
@@ -33,6 +33,15 @@
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/pagination-custom.css">
 	<script src="<?php echo get_template_directory_uri(); ?>/js/text-overflow.js"></script>
 	<script src="<?php echo get_template_directory_uri(); ?>/js/tags-truncate.js"></script>
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z57GQP1XRD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z57GQP1XRD');
+</script>
 </head>
 
 <body <?php body_class(); ?>>
@@ -46,9 +55,9 @@
 		<header id="masthead" class="site-header" role="banner" style="padding:0;margin:0;">
 			<div class="header-custom-bar">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="header-custom-logo-link">
-					<img class="header-custom-logo" src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="ロゴ" />
+					<img class="header-custom-logo" src="<?php echo get_template_directory_uri(); ?>/images/header-logo.png" alt="ロゴ" />
 				</a>
-				<div class="header-custom-ic">賀田ICから約5分</div>
+<!-- 				<div class="header-custom-ic">賀田ICから約5分</div> -->
 				<nav class="header-custom-nav">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="<?php echo is_front_page() ? 'active' : ''; ?>">トップページ</a>
 					<a href="<?php echo esc_url( home_url( '?post_type=post' ) ); ?>" class="<?php echo is_post_type_archive('post') ? 'active' : ''; ?>">釣果一覧</a>
@@ -67,7 +76,7 @@
 					$captain_url = $captain_page ? get_permalink($captain_page->ID) : home_url('?page_id=4');
 					?>
 					<a href="<?php echo esc_url( $captain_url ); ?>" class="<?php echo is_page('captain') ? 'active' : ''; ?>">船長紹介</a>
-					<a href="<?php echo esc_url( home_url( '?post_type=diary' ) ); ?>" class="<?php echo is_post_type_archive('diary') ? 'active' : ''; ?>">きょうの日記</a>
+					<a href="<?php echo esc_url( home_url( '/diary/' ) ); ?>" class="<?php echo is_post_type_archive('diary') ? 'active' : ''; ?>">きょうの日記</a>
 				</nav>
 				<div class="header-custom-telarea">
 					<span class="header-custom-telicon">

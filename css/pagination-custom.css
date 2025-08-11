@@ -360,6 +360,59 @@
   display: none;
 }
 
+/* 魚種タグの追加に応じてサイドバーの縦幅を伸ばす */
+.fish-species-list .fish-species-tag:nth-child(7) ~ .fish-species-tag {
+  display: inline-block;
+}
+
+/* 魚種タグが7つ以上ある場合のサイドバー高さ調整 */
+.fish-species-list .fish-species-tag:nth-child(7) ~ .fish-species-tag {
+  margin-top: 4px;
+}
+
+/* 魚種タグが10つ以上ある場合のさらなる高さ調整 */
+.fish-species-list .fish-species-tag:nth-child(10) ~ .fish-species-tag {
+  margin-top: 8px;
+}
+
+/* 魚種タグが無限に増えても対応できる設定 */
+.fish-species-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: flex-start;
+  min-height: 28px;
+  max-height: none; /* 高さ制限を解除 */
+}
+
+/* タグエリア全体の高さ制限を解除 */
+.catch-post-tags {
+  margin: 15px auto 15px auto;
+  width: 100%;
+  max-width: 380px;
+  min-height: 28px;
+  max-height: none; /* 高さ制限を解除 */
+  display: flex;
+  align-items: flex-start;
+  overflow: visible; /* はみ出しを許可 */
+}
+
+/* 一覧ページでのカード高さも動的に調整 */
+.news-container .latest-catch-card {
+  min-height: 450px;
+  max-height: none; /* 最大高さ制限を解除 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* トップページのカード高さも動的に調整 */
+.latest-catch-card {
+  min-height: 420px;
+  max-height: none; /* 最大高さ制限を解除 */
+  display: flex;
+  flex-direction: column;
+}
+
 .normal-tags-list .normal-tag:nth-child(n+6) {
   display: none;
 }
@@ -368,6 +421,15 @@
 .post-type-archive-news .normal-tags-list .normal-tag:nth-child(n+8),
 .post-type-archive-diary .normal-tags-list .normal-tag:nth-child(n+8) {
   display: none;
+}
+
+/* タグエリアを最下部に固定 */
+.news-container .catch-post-tags {
+  margin-top: auto;
+  margin-bottom: 15px;
+  min-height: 28px; /* タグがない場合でも高さを保証 */
+  max-height: 56px; /* 最大2行分の高さ */
+  overflow: hidden;
 }
 
 /* 省略インジケーター - 常に表示してJavaScriptで制御 */
@@ -384,56 +446,6 @@
 .tags-truncated .fish-species-list:after,
 .tags-truncated .normal-tags-list:after {
   display: inline;
-}
-
-/* 一覧ページでのカード高さ統一 */
-.news-container .latest-catch-card {
-  min-height: 450px; /* カード全体の最小高さを調整 */
-  max-height: 450px; /* 最大高さも制限 */
-  display: flex;
-  flex-direction: column;
-}
-
-.news-container .latest-catch-card-title {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 30px;
-  min-height: 30px; /* 1行の最小高さ */
-  max-height: 60px; /* 2行分の最大高さ */
-}
-
-.news-container .latest-catch-card-desc {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 27px;
-  height: 81px; /* 3行分の高さを固定 (27px × 3行 = 81px) */
-  flex-grow: 0; /* 高さを固定するため */
-}
-
-/* タグエリアを最下部に固定 */
-.news-container .catch-post-tags {
-  margin-top: auto;
-  margin-bottom: 15px;
-  min-height: 28px; /* タグがない場合でも高さを保証 */
-  max-height: 56px; /* 最大2行分の高さ */
-  overflow: hidden;
-}
-
-/* トップページでもカード高さ統一 */
-.latest-catch-card {
-  min-height: 420px; /* トップページのカード高さを保証 */
-  display: flex;
-  flex-direction: column;
-}
-
-.latest-catch-card .catch-post-tags {
-  margin-top: auto;
 }
 
 /* サイドバーのタイトルを中央揃え */

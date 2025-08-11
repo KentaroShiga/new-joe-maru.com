@@ -11,7 +11,7 @@ get_header(); ?>
 
 <div class="mainvisual mainvisual-news">
     <div>
-        <img src="<?php echo get_template_directory_uri(); ?>/images/blog.png" alt="メインビジュアル" />
+        <img src="<?php echo get_template_directory_uri(); ?>/images/blog.webp" alt="メインビジュアル" />
         <div class="mainvisual-overlay"></div>
         <h1 class="news-title">きょうの日記</h1>
         <div class="mainvisual-caption">船長の気まぐれブログ</div>
@@ -32,7 +32,7 @@ get_header(); ?>
                                 </a>
                             <?php else : ?>
                                 <a href="<?php the_permalink(); ?>">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/footer-logo.png" alt="<?php the_title(); ?>" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/footer-logo.webp" alt="<?php the_title(); ?>" />
                                 </a>
                             <?php endif; ?>
                         </div>

@@ -2,7 +2,7 @@
 
 <div class="mainvisual mainvisual-news">
     <div>
-        <img src="<?php echo get_template_directory_uri(); ?>/images/news-new-full.jpg" alt="メインビジュアル" />
+        <img src="<?php echo get_template_directory_uri(); ?>/images/news-new-full.webp" alt="メインビジュアル" />
         <div class="mainvisual-overlay"></div>
         <h1 class="news-title">お知らせ</h1>
         <div class="mainvisual-caption">丈丸渡船のお知らせ</div>
@@ -23,7 +23,7 @@
                                 </a>
                             <?php else : ?>
                                 <a href="<?php the_permalink(); ?>">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/footer-logo.png" alt="<?php the_title(); ?>" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/footer-logo.webp" alt="<?php the_title(); ?>" />
                                 </a>
                             <?php endif; ?>
                         </div>

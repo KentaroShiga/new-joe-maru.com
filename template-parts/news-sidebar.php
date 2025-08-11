@@ -61,7 +61,7 @@ $archives = wp_get_archives(array(
 
                 <!-- Post Image -->
                 <div class="facebook-simple-image">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/face-fish.jpg" alt="釣果の写真" />
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/face-fish.webp" alt="釣果の写真" />
                 </div>
 
                 <!-- Action buttons -->
@@ -117,7 +117,7 @@ $archives = wp_get_archives(array(
                 <div class="instagram-simple-header">
                     <div class="instagram-simple-profile">
                         <div class="instagram-simple-avatar">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/joemaru-icon.jpg" alt="joemaru_mrtk" />
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/joemaru-icon.webp" alt="joemaru_mrtk" />
                         </div>
                         <div class="instagram-simple-info">
                             <div class="instagram-simple-username">joemaru_mrtk</div>
@@ -135,7 +135,7 @@ $archives = wp_get_archives(array(
 
                 <!-- Post Image -->
                 <div class="instagram-simple-image">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/insta-fish.jpg" alt="釣果の写真" />
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/insta-fish.webp" alt="釣果の写真" />
                 </div>
 
                 <!-- Action buttons -->

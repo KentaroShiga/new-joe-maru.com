@@ -7,15 +7,15 @@ get_header(); ?>
 <div class="captain-bg">
   <div class="captain-container">
     <div class="captain-title-row">
-      <span class="captain-title-main">ACCESS</h1>
+      <span class="captain-title-main">ACCESS</span>
       <div class="access-map-btn" id="access-map-btn">
         <div class="access-map-btn-text">マップで詳細</div>
       </div>
     </div>
-    <h1 class="captain-subtitle">アクセス</div>
+    <h1 class="captain-subtitle">アクセス</h1>
     <div class="captain-main-row">
       <div class="captain-image-area">
-        <img class="captain-image" src="<?php echo get_template_directory_uri(); ?>/images/access.png" alt="船長写真">
+        <img class="captain-image" src="<?php echo get_template_directory_uri(); ?>/images/access.webp" alt="船長写真">
         <div class="captain-message-vertical">ACCESS</div>
       </div>
       <div class="captain-catch">〒519-3924　三重県尾鷲市曽根町149番地 <br>賀田インターから車で約5分。 <br>初めての方でもスムーズにお越しいただけます！</div>

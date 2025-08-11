@@ -16,7 +16,7 @@ get_header(); ?>
 				<!-- タイトルヘッダー -->
 				<header class="single-post-header">
 					<div class="single-header-icon">
-						<img src="<?php echo get_template_directory_uri(); ?>/images/h1-icon.png" alt="お知らせアイコン" />
+						<img src="<?php echo get_template_directory_uri(); ?>/images/h1-icon.webp" alt="お知らせアイコン" />
 					</div>
 					<h1 class="single-post-title"><?php the_title(); ?></h1>
 					<time class="single-post-date"><?php echo get_the_date('Y-m-d'); ?></time>

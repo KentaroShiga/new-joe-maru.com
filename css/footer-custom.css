@@ -20,7 +20,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 19px;
-  margin: 0 auto 32p;
+  margin: 0 auto 32px;
 }
 .access-title-bar {
   width: 45px;
@@ -192,15 +192,62 @@ body {
   margin-bottom: clamp(4px, 0.8vw, 8px);
 }
 .footer-count-title {
-  font-size: clamp(14px, 1.5vw, 15px);
+  font-size: 16px;
   font-weight: 700;
   margin: clamp(9px, 1.8vw, 18px) 0 clamp(2px, 0.4vw, 4px) 0;
+}
+/* Count Per Dayプラグインの詳細統計スタイル */
+.footer-count-plugin {
+  margin-top: 15px;
+  padding: 12px;
+  background: rgba(120, 185, 108, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #78B96C;
+}
+
+.footer-count-plugin-title {
+  font-size: clamp(13px, 1.4vw, 14px);
+  font-weight: 700;
+  color: #78B96C;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.footer-count-plugin-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-count-plugin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(120, 185, 108, 0.2);
+}
+
+.footer-count-plugin-item:last-child {
+  border-bottom: none;
+}
+
+.footer-count-plugin-label {
+  font-size: clamp(12px, 1.3vw, 13px);
+  color: #191919;
+  font-weight: 500;
+}
+
+.footer-count-plugin-value {
+  font-size: clamp(12px, 1.3vw, 13px);
+  color: #78B96C;
+  font-weight: 700;
+  text-align: right;
 }
 .footer-count-list {
   list-style: none;
   padding: 0;
   margin: 0 0 clamp(4px, 0.8vw, 8px) 0;
-  font-size: clamp(20px, 2vw, 22px);
+  font-size: 16px;
 }
 .footer-count-list li {
   margin-bottom: 2px;
@@ -228,7 +275,7 @@ body {
 .footer-menu a {
   color: #191919;
   text-decoration: none;
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: 16px;
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
@@ -301,6 +348,9 @@ body {
 }
 
 @media (max-width: 1200px) {
+	  .access-title {
+    font-size: 32px!important;
+	}
   .toppage-access {
     padding: 30px 15px;
   }
@@ -315,7 +365,7 @@ body {
   }
   
   .access-tel-btns {
-    gap: 20px;
+    gap: 20px!important;
     margin-top: 30px;
   }
   
@@ -351,7 +401,7 @@ body {
   .access-tel-btns {
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 15px!important;
   }
   
   .access-tel-btn {
@@ -365,7 +415,7 @@ body {
   }
   
   .access-title {
-    font-size: clamp(20px, 6vw, 32px);
+    font-size: 18px!important;
     padding: 0 5px;
   }
   
@@ -386,7 +436,7 @@ body {
   
   .access-tel-btns {
     margin-top: 25px;
-    gap: 12px;
+    gap: 12px!important;
   }
   
   .access-tel-btn {
@@ -454,7 +504,7 @@ body {
   }
   
   .access-title {
-    font-size: clamp(18px, 7vw, 28px);
+    font-size: 16px!important;
     padding: 0 5px;
     line-height: 1.2;
     font-size: 22px;
@@ -478,14 +528,14 @@ body {
   
   .access-tel-btns {
     margin-top: 0px;
-    gap: 10px;
+    gap: 10px!important;
   }
   
   .access-tel-btn {
     width: clamp(230px, 100vw, 280px);
     height: clamp(38px, 8vw, 45px);
     border-radius: 25px;
-    padding: 5px 24px!important;
+    padding: 10px 24px 5px!important;
   }
   
   .access-tel-btn-label {
@@ -530,16 +580,16 @@ body {
   
   .footer-count-title,
   .footer-rule-title {
-    font-size: clamp(12px, 3.5vw, 14px);
+    font-size: 16px;
   }
   
   .footer-count-list,
   .footer-rule-list {
-    font-size: clamp(12px, 3.5vw, 14px);
+    font-size: 14px;
   }
   
   .footer-menu a {
-    font-size: clamp(12px, 3.5vw, 14px);
+    font-size: 16px;
   }
   
   .footer-sns {

@@ -7,12 +7,13 @@ get_header(); ?>
 <div class="captain-bg">
     <div class="captain-container">
         <div class="captain-title-row">
-            <span class="captain-title-main">PRICE</h1>
+            <span class="captain-title-main">PRICE</span>
         </div>
-        <h1 class="captain-subtitle">料金について</div>
+        <h1 class="captain-subtitle">料金について</h1>
         <div class="captain-main-row">
             <div class="captain-image-area">
-                <img class="captain-image" src="<?php echo get_template_directory_uri(); ?>/images/price-full.jpg" alt="料金案内">
+                <img class="captain-image" 
+src="<?php echo get_template_directory_uri(); ?>/images/price.webp" alt="料金案内">
                 <div class="captain-message-vertical">PRICE</div>
             </div>
             <div class="captain-catch">安心の料金で、気軽に賀田湾で釣り体験を。</div>

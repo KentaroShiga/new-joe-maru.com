@@ -13,8 +13,8 @@
                     <p class="price-detail-label-text">プラン<span class="price-detail-label-text--accent">A</span></p>
                 </div>
                 <div class="price-detail-images">
-                    <img class="price-detail-img price-detail-img--top" src="<?php echo get_template_directory_uri(); ?>/images/planA-top.png" alt="カセ・筏釣り1" />
-                    <img class="price-detail-img price-detail-img--bottom" src="<?php echo get_template_directory_uri(); ?>/images/planA-bottom.png" alt="カセ・筏釣り2" />
+                    <img class="price-detail-img price-detail-img--top" src="<?php echo get_template_directory_uri(); ?>/images/planA-top.webp" alt="カセ・筏釣り1" />
+                    <img class="price-detail-img price-detail-img--bottom" src="<?php echo get_template_directory_uri(); ?>/images/planA-bottom.webp" alt="カセ・筏釣り2" />
                 </div>
             </div>
             <div class="price-detail-header">
@@ -37,8 +37,8 @@
                     <p class="price-detail-label-text">プラン<span class="price-detail-label-text--accent">B</span></p>
                 </div>
                 <div class="price-detail-images">
-                    <img class="price-detail-img price-detail-img--top" src="<?php echo get_template_directory_uri(); ?>/images/planB-top.png" alt="近海チャーター船1" />
-                    <img class="price-detail-img price-detail-img--bottom" src="<?php echo get_template_directory_uri(); ?>/images/planB-bottom.png" alt="近海チャーター船2" />
+                    <img class="price-detail-img price-detail-img--top" src="<?php echo get_template_directory_uri(); ?>/images/planB-top.webp" alt="近海チャーター船1" />
+                    <img class="price-detail-img price-detail-img--bottom" src="<?php echo get_template_directory_uri(); ?>/images/planB-bottom.webp" alt="近海チャーター船2" />
                 </div>
             </div>
             <div class="price-detail-header">
@@ -61,8 +61,8 @@
                     <p class="price-detail-label-text">プラン<span class="price-detail-label-text--accent">C</span></p>
                 </div>
                 <div class="price-detail-images">
-                    <img class="price-detail-img price-detail-img--top" src="<?php echo get_template_directory_uri(); ?>/images/planC-top.png" alt="湾内チャーター船1" />
-                    <img class="price-detail-img price-detail-img--bottom" src="<?php echo get_template_directory_uri(); ?>/images/planC-bottom.png" alt="湾内チャーター船2" />
+                    <img class="price-detail-img price-detail-img--top" src="<?php echo get_template_directory_uri(); ?>/images/planC-top.webp" alt="湾内チャーター船1" />
+                    <img class="price-detail-img price-detail-img--bottom" src="<?php echo get_template_directory_uri(); ?>/images/planC-bottom.webp" alt="湾内チャーター船2" />
                 </div>
             </div>
             <div class="price-detail-header">

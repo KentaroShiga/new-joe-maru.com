@@ -4,9 +4,9 @@
  *
  * Displays all of the head element and everything up until the "site-content" div.
  *
- * @package WordPress
- * @subpackage Twenty_Sixteen
- * @since Twenty Sixteen 1.0
+ * @package JOEMARU
+ * @subpackage JOEMARU
+ * @since JOEMARU 1.0
  */
 
 ?><!DOCTYPE html>
@@ -15,32 +15,59 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
+	
+	<!-- Facebook用メタタグ -->
+	<meta property="fb:app_id" content="">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="<?php echo esc_url( home_url( '/' ) ); ?>">
+	<meta property="og:title" content="<?php bloginfo( 'name' ); ?>">
+	<meta property="og:description" content="<?php bloginfo( 'description' ); ?>">
+	<meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/images/logo.png">
+	<meta property="og:locale" content="ja_JP">
+	
 	<?php if ( is_singular() && pings_open( get_queried_object() ) ) : ?>
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php endif; ?>
 	<?php wp_head(); ?>
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/toppage-custom.css">
+	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/pagination-custom.css">
+	<script src="<?php echo get_template_directory_uri(); ?>/js/text-overflow.js"></script>
+	<script src="<?php echo get_template_directory_uri(); ?>/js/tags-truncate.js"></script>
 </head>
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
 	<div class="site-inner">
-		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'twentysixteen' ); ?></a>
+		<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'joemaru' ); ?></a>
 
 		<!-- 追加: ヘッダー用カスタムCSSの読み込み -->
 		<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/header-custom.css">
 
 		<header id="masthead" class="site-header" role="banner" style="padding:0;margin:0;">
 			<div class="header-custom-bar">
-				<img class="header-custom-logo" src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="ロゴ" />
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="header-custom-logo-link">
+					<img class="header-custom-logo" src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="ロゴ" />
+				</a>
 				<div class="header-custom-ic">賀田ICから約5分</div>
 				<nav class="header-custom-nav">
-					<a href="/" class="active">トップページ</a>
-					<a href="#">釣果一覧</a>
-					<a href="#">料金について</a>
-					<a href="#">アクセス</a>
-					<a href="#">船長紹介</a>
-					<a href="#">きょうの日記</a>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="<?php echo is_front_page() ? 'active' : ''; ?>">トップページ</a>
+					<a href="<?php echo esc_url( home_url( '?post_type=post' ) ); ?>" class="<?php echo is_post_type_archive('post') ? 'active' : ''; ?>">釣果一覧</a>
+					<?php
+					$price_page = get_page_by_path('price');
+					$price_url = $price_page ? get_permalink($price_page->ID) : home_url('?page_id=3');
+					?>
+					<a href="<?php echo esc_url( $price_url ); ?>" class="<?php echo is_page('price') ? 'active' : ''; ?>">料金について</a>
+					<?php
+					$access_page = get_page_by_path('access');
+					$access_url = $access_page ? get_permalink($access_page->ID) : home_url('?page_id=2');
+					?>
+					<a href="<?php echo esc_url( $access_url ); ?>" class="<?php echo is_page('access') ? 'active' : ''; ?>">アクセス</a>
+					<?php
+					$captain_page = get_page_by_path('captain');
+					$captain_url = $captain_page ? get_permalink($captain_page->ID) : home_url('?page_id=4');
+					?>
+					<a href="<?php echo esc_url( $captain_url ); ?>" class="<?php echo is_page('captain') ? 'active' : ''; ?>">船長紹介</a>
+					<a href="<?php echo esc_url( home_url( '?post_type=diary' ) ); ?>" class="<?php echo is_post_type_archive('diary') ? 'active' : ''; ?>">きょうの日記</a>
 				</nav>
 				<div class="header-custom-telarea">
 					<span class="header-custom-telicon">
@@ -56,8 +83,8 @@
 						</svg>
 					</span>
 					<div class="header-custom-telnums">
-						<div>090-1417-9322（村田丈幸）</div>
-						<div>080-2628-2183（村田京）</div>
+						<div><a href="tel:090-1417-9322">090-1417-9322（村田丈幸）</a></div>
+						<div><a href="tel:080-2628-2183">080-2628-2183（村田京）</a></div>
 					</div>
 				</div>
 			</div>

@@ -1,17 +1,14 @@
 /*
-Theme Name: Twenty Sixteen
-Theme URI: https://wordpress.org/themes/twentysixteen/
-Author: the WordPress team
-Author URI: https://wordpress.org/
-Description: Twenty Sixteen is a modernized take on an ever-popular WordPress layout — the horizontal masthead with an optional right sidebar that works perfectly for blogs and websites. It has custom color options with beautiful default color schemes, a harmonious fluid grid using a mobile-first approach, and impeccable polish in every detail. Twenty Sixteen will make your WordPress look beautiful everywhere.
-Version: 1.3
+Theme Name: JOEMARU
+Theme URI: https://joemaru.com
+Author: JOEMARU
+Author URI: https://joemaru.com
+Description: 丈丸渡船の公式ウェブサイトテーマ
+Version: 1.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: one-column, two-columns, right-sidebar, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready, blog
-Text Domain: twentysixteen
-
-This theme, like WordPress, is licensed under the GPL.
-Use it to make something cool, have fun, and share what you've learned with others.
+Text Domain: joemaru
+Tags: fishing, boat, charter, japan
 */
 
 
@@ -3976,4 +3973,400 @@ p > video {
 	.widecolumn {
 		padding: 0;
 	}
+}
+
+/* ==========================================================================
+   シンプルなInstagram Widget Styles
+   ========================================================================== */
+
+.instagram-simple-widget {
+	background: white;
+	border: 1px solid #dbdbdb;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 580px;
+	height: auto;
+}
+
+/* Header */
+.instagram-simple-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px;
+}
+
+.instagram-simple-profile {
+	display: flex;
+	align-items: center;
+}
+
+.instagram-simple-avatar {
+	width: 32px;
+	height: 32px;
+	margin-right: 12px;
+}
+
+.instagram-simple-avatar img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.instagram-simple-username {
+	font-size: 14px;
+	font-weight: 600;
+	color: #262626;
+	line-height: 18px;
+}
+
+.instagram-simple-time {
+	font-size: 12px;
+	color: #8e8e8e;
+	line-height: 16px;
+}
+
+.instagram-simple-link {
+	color: #8e8e8e;
+	text-decoration: none;
+	padding: 4px;
+}
+
+.instagram-simple-link:hover {
+	color: #262626;
+}
+
+/* Post Image */
+.instagram-simple-image {
+	width: calc(100% - 32px);
+	line-height: 0;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	min-height: 260px;
+	margin: 0 16px;
+	border-radius: 8px;
+}
+
+.instagram-simple-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Actions */
+.instagram-simple-actions {
+	padding: 16px 16px 12px;
+	display: flex;
+	align-items: center;
+}
+
+.instagram-simple-action-left {
+	display: flex;
+	gap: 16px;
+	align-items: center;
+}
+
+.instagram-simple-action-left svg {
+	color: #262626;
+	cursor: pointer;
+	transition: color 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+}
+
+.instagram-simple-action-left svg:hover {
+	color: #8e8e8e;
+}
+
+/* Likes */
+.instagram-simple-likes {
+	padding: 0 16px 12px;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.instagram-simple-likes strong {
+	font-weight: 600;
+	color: #262626;
+}
+
+/* Content */
+.instagram-simple-content {
+	padding: 0 16px 20px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #262626;
+	min-height: 100px;
+}
+
+.instagram-simple-username-bold {
+	font-weight: 600;
+	margin-right: 4px;
+}
+
+.instagram-simple-hashtags {
+	color: #00376b;
+	display: block;
+	margin-top: 8px;
+	line-height: 18px;
+}
+
+/* Follow button */
+.instagram-simple-follow {
+	padding: 16px;
+	border-top: 1px solid #efefef;
+	margin-top: auto;
+}
+
+.instagram-simple-follow-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+	color: white;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: 600;
+	transition: opacity 0.2s ease;
+}
+
+.instagram-simple-follow-btn:hover {
+	opacity: 0.9;
+	color: white;
+}
+
+.instagram-simple-follow-btn svg {
+	margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.instagram-simple-widget {
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+	}
+	
+	.instagram-simple-header,
+	.instagram-simple-actions,
+	.instagram-simple-likes,
+	.instagram-simple-content,
+	.instagram-simple-follow {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+}
+
+/* ==========================================================================
+   シンプルなFacebook Widget Styles
+   ========================================================================== */
+
+.facebook-simple-widget {
+	background: white;
+	border: 1px solid #e4e6ea;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 650px;
+	height: auto;
+}
+
+/* Header */
+.facebook-simple-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 16px;
+	border-bottom: 1px solid #e4e6ea;
+}
+
+.facebook-simple-profile {
+	display: flex;
+	align-items: center;
+}
+
+.facebook-simple-avatar {
+	width: 40px;
+	height: 40px;
+	margin-right: 12px;
+}
+
+.facebook-simple-avatar img {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.facebook-simple-page-name {
+	font-size: 15px;
+	font-weight: 600;
+	color: #1c1e21;
+	line-height: 20px;
+}
+
+.facebook-simple-time {
+	font-size: 13px;
+	color: #65676b;
+	line-height: 16px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.facebook-simple-link {
+	color: #65676b;
+	text-decoration: none;
+	padding: 4px;
+	transition: color 0.2s ease;
+}
+
+.facebook-simple-link:hover {
+	color: #1877f2;
+}
+
+/* Post Content */
+.facebook-simple-content {
+	padding: 16px;
+	font-size: 15px;
+	color: #1c1e21;
+	line-height: 20px;
+}
+
+/* Post Image */
+.facebook-simple-image {
+	width: calc(100% - 32px);
+	line-height: 0;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	min-height: 260px;
+	margin: 0 16px;
+	border-radius: 8px;
+}
+
+.facebook-simple-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Actions */
+.facebook-simple-actions {
+	padding: 16px;
+	border-bottom: 1px solid #e4e6ea;
+}
+
+.facebook-simple-action-left {
+	display: flex;
+	gap: 24px;
+	align-items: center;
+}
+
+.facebook-simple-action-btn {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: #65676b;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.facebook-simple-action-btn:hover {
+	color: #1877f2;
+}
+
+.facebook-simple-action-btn svg {
+	width: 16px;
+	height: 16px;
+}
+
+/* Likes */
+.facebook-simple-likes {
+	padding: 0 16px 16px;
+	font-size: 15px;
+	color: #65676b;
+	line-height: 20px;
+}
+
+.facebook-simple-likes strong {
+	font-weight: 600;
+}
+
+/* Follow button */
+.facebook-simple-follow {
+	padding: 16px;
+	border-top: 1px solid #e4e6ea;
+}
+
+.facebook-simple-follow-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #1877f2;
+	color: white;
+	text-decoration: none;
+	padding: 8px 16px;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: 600;
+	transition: background-color 0.2s ease;
+	gap: 8px;
+}
+
+.facebook-simple-follow-btn:hover {
+	background: #166fe5;
+	color: white;
+}
+
+.facebook-simple-follow-btn svg {
+	width: 16px;
+	height: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+	.facebook-simple-widget {
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+	}
+	
+	.facebook-simple-header,
+	.facebook-simple-content,
+	.facebook-simple-actions,
+	.facebook-simple-likes,
+	.facebook-simple-follow {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+}
+
+/* スクリーンリーダー専用クラス */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }

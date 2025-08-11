@@ -1,0 +1,89 @@
+/* スクロールトップボタン */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #78B96C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(120, 185, 108, 0.3);
+}
+
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    background-color: #5A9B4A;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(120, 185, 108, 0.4);
+}
+
+.scroll-to-top::before {
+    content: '>';
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    transform: rotate(-90deg);
+    line-height: 1;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 20px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .scroll-to-top::before {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scroll-to-top {
+        bottom: 15px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .scroll-to-top::before {
+        font-size: 16px;
+    }
+}
+
+/* アニメーション効果 */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.scroll-to-top.show {
+    animation: bounceIn 0.6s ease;
+} 

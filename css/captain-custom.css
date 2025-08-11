@@ -1,0 +1,366 @@
+/* 船長紹介ページ カスタムCSS */
+
+.site-content {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.captain-mainvisual {
+  width: 100%;
+  height: clamp(250px, 35vw, 400px);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.captain-mainvisual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.captain-bg {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding: clamp(40px, 5vw, 80px) 0 0 0;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+.captain-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 clamp(40px, 5vw, 80px);
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.captain-title-row {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 57px;
+  margin-bottom: 0;
+}
+.captain-title-main {
+  font-size: clamp(36px, 5vw, 72px);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  color: #525655;
+  line-height: 1.2;
+}
+.captain-title-message {
+  font-size: clamp(36px, 5vw, 72px);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 500;
+  color: #78B96C;
+  line-height: 1.2;
+}
+.captain-subtitle {
+  color: #78B96C;
+  font-size: clamp(14px, 1.5vw, 16px);
+  font-family: 'Yu Gothic', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  margin-top: 9px;
+  margin-bottom: 32px;
+  margin-left: 20px;
+}
+.captain-main-row {
+  position: relative;
+  margin-top: 0;
+  padding-bottom: 40px;
+}
+.captain-image-area {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 896 / 451;
+  margin-bottom: 32px;
+}
+.captain-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.captain-message-vertical {
+  position: absolute;
+  left: -230px;
+  top: 840px;
+  transform: rotate(90deg);
+  color: #fff;
+  font-size: clamp(60px, 15vw, 147px);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight:550;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+.captain-catch {
+  width: min(900px, 95%);
+  margin: 40px 0 0 147px;
+  color: #222;
+  font-size: clamp(18px, 2vw, 24px);
+  font-family: 'Yu Gothic', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+}
+.captain-greeting {
+  width: min(900px, 95%);
+  margin: 60px 0 0 147px;
+  color: #222;
+  font-size: clamp(16px, 1.5vw, 18px);
+  font-family: 'Yu Gothic', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
+  white-space: pre-line;
+}
+  /* プライスページ専用の縦書きメッセージ位置調整 */
+  .page-template-page-price .captain-message-vertical {
+    left: -75px;
+    top:540px;
+  }
+@media (max-width: 1000px) {
+  .captain-container {
+    max-width: 100%;
+    padding: 20px;
+  }
+  .captain-image-area, .captain-image {
+    width: 100%;
+    aspect-ratio: 1200 / 450.89;
+  }
+  .captain-catch {
+    width: 85vw;
+    padding-left: 20vw;
+    margin-left: 0;
+  }
+  .captain-greeting {
+    width: 85vw;
+    padding-left: 20vw;
+    margin-left: 0;
+    margin-top: 50px;
+    line-height: 1.5;
+  }
+  .captain-message-vertical {
+    font-size: clamp(60px, 15vw, 147px);
+    left: -20vw;
+    top: 65vw;
+  }
+    /* ACCESSページ専用：もっと上 */
+    .page-template-page-access .captain-message-vertical {
+      top: 55vw;
+      left: -15vw;
+    }
+      /* プライスページ専用の縦書きメッセージ位置調整 */
+.page-template-page-price .captain-message-vertical {
+  left: -45px;
+  top: 420px;
+}
+  .access-map-btn {
+    width: 140px;
+    height: 42px;
+  }
+  
+  .access-map-btn-text {
+    width: 108px;
+    height: 24px;
+    left: 16px;
+    top: 9px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+@media (max-width: 768px) {
+  .captain-container {
+    padding: 15px;
+  }
+  .captain-title-row {
+    margin-top: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .captain-catch {
+    width: 90%;
+    padding-left: 5vw;
+  }
+  .captain-greeting {
+    width: 90%;
+    padding-left: 5vw;
+    margin-top: 40px;
+    line-height: 1.4;
+  }
+  .captain-message-vertical {
+    left: -5vw;
+    top: 30vw; /* スマホ表示で上の方に移動 */
+  }
+  
+  /* Captainページ専用：もっと下、少し左 */
+  .page-template-page-captain .captain-message-vertical {
+    left: -29vw;
+    top: 65vw;
+  }
+  /* プライスページ専用の縦書きメッセージ位置調整 */
+.page-template-page-price .captain-message-vertical {
+  left: -70px;
+  top:280px;
+}
+  /* ACCESSページ専用：もっと上 */
+  .page-template-page-access .captain-message-vertical {
+    top: 58vw;
+    left: -22vw;
+  }
+  .access-map-btn {
+    width: 120px;
+    height: 36px;
+    align-self: flex-end;
+  }
+  
+  .access-map-btn-text {
+    width: 90px;
+    height: 20px;
+    left: 15px;
+    top: 8px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .captain-message-vertical {
+    top: 25vw; /* 小さなスマホでさらに上に */
+    font-size: clamp(50px, 12vw, 80px);
+  }
+  
+  /* Captainページ専用：小さなスマホでももっと下、少し左 */
+  .page-template-page-captain .captain-message-vertical {
+    left: -26vw;
+    top: 58vw;
+  }
+  .page-template-page-price .captain-message-vertical {
+    left: -40px;
+    top:180px;
+  }
+  /* ACCESSページ専用：小さなスマホでももっと上 */
+  .page-template-page-access .captain-message-vertical {
+    top: 51vw;
+    left: -17vw;
+  }
+  .access-map-btn {
+    width: 110px;
+    height: 32px;
+  }
+  
+  .access-map-btn-text {
+    width: 80px;
+    height: 18px;
+    left: 15px;
+    top: 7px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+.access-map {
+    width: 100%;
+    max-width: 1200px;
+    height: 400px;
+    margin: 10px auto;
+    position: relative;
+  }
+
+.access-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* 地図の余白をトップページと統一 */
+@media (max-width: 1200px) {
+  .access-map {
+    margin: 8px auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .access-map {
+    margin: 5px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .access-map {
+    margin: 3px auto;
+  }
+}
+
+/* 船長紹介文の段落間余白を適切に調整 */
+.page-template-page-captain .captain-greeting {
+  margin-bottom: 20px;
+}
+
+/* <br>の基本設定：通常の改行のみ */
+.captain-greeting br {
+  margin: 0;
+  padding: 0;
+}
+
+/* <br><br>（2連続）の時だけ1行分のスペースを追加 */
+.captain-greeting br + br {
+  display: block;
+  margin-bottom: 1em;
+}
+
+/* ACCESSページ用マップボタン */
+.access-map-btn {
+  width: 166px;
+  height: 48.8px;
+  position: relative;
+  background: #78B96C;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.access-map-btn:hover {
+  background: #5A9B4A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(120, 185, 108, 0.3);
+}
+
+.access-map-btn-text {
+  width: 126.4px;
+  height: 26px;
+  left: 20px;
+  top: 11px;
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 400;
+  line-height: 28.8px;
+  word-wrap: break-word;
+}
+
+ 

@@ -1,62 +1,165 @@
 /* トップページ専用カスタムCSS */
+.site-content {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.main-visual {
+  width: 100%;
+  height: clamp(300px, 50vw, 511px);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.main-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .toppage-mainvisual {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
+  margin-top: clamp(60px, 10vw, 100px); /* ヘッダー高さ分のマージン */
   position: relative;
   background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .toppage-mainvisual > div:first-child {
-  width: 100vw;
-  height: 511px;
+  width: 100%;
+  height: clamp(300px, 50vw, 511px);
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .toppage-mainvisual img[alt="メインビジュアル"] {
-  width: 100vw;
-  height: 511px;
+  width: 100%;
+  height: clamp(300px, 50vw, 511px);
   object-fit: cover;
   object-position: center;
+  display: block;
+  max-width: 100%;
+  filter: brightness(0.6);
 }
 .toppage-mainvisual img[alt="ロゴテキスト"] {
   position: absolute;
-  left: 35%;
-  top: 183px;
-  width: 412px;
-  height: 101px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(200px, 40vw, 412px);
+  height: auto;
+  max-width: 100%;
 }
 .toppage-mainvisual .mainvisual-caption {
   position: absolute;
-  left: 34%;
-  top: 301px;
-  width: 460px;
+  left: 50%;
+  top: 60%;
+  transform: translateX(-50%);
+  width: clamp(280px, 80vw, 460px);
   text-align: center;
   color: white;
-  font-size: 16px;
-  font-family: 'Yu Gothic', sans-serif;
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-family: 'Noto Serif JP', serif;
   font-weight: 700;
   letter-spacing: 0.8px;
+  box-sizing: border-box;
 }
 .toppage-section-cards {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(40px, 5vw, 80px) clamp(20px, 3vw, 40px);
+  box-sizing: border-box;
+}
+.toppage-section-cards-title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: clamp(20px, 3vw, 40px);
+  color: #333;
+}
+.toppage-section-cards-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 360px), 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  justify-content: center;
+}
+.toppage-section-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+.toppage-section-card:hover {
+  transform: translateY(-5px);
+}
+.toppage-section-card-image {
+  width: 100%;
+  height: clamp(180px, 25vw, 240px);
+  object-fit: cover;
+}
+.toppage-section-card-content {
+  padding: clamp(15px, 2vw, 20px);
+}
+.toppage-section-card-title {
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: bold;
+  margin-bottom: clamp(10px, 1.5vw, 15px);
+  color: #333;
+}
+.toppage-section-card-description {
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.6;
+  color: #666;
+}
+@media screen and (max-width: 767px) {
+  .toppage-section-cards-content {
+    grid-template-columns: 1fr;
+  }
+}
+.toppage-cards-row {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 0;
-  margin-top: 40px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.toppage-cards-row:first-child {
+  margin-bottom: 0;
+}
+.toppage-cards-row:first-child .toppage-card {
+  width: 50%;
+}
+.toppage-cards-row:last-child .toppage-card {
+  width: 33.333%;
 }
 .toppage-card {
-  width: 370px;
-  background: #222;
   border-radius: 0;
   overflow: hidden;
   position: relative;
-  min-height: 260px;
+  min-height: clamp(200px, 30vw, 260px);
+  margin: 0;
+  transition: all 0.3s ease;
 }
 .toppage-card img {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.3s ease;
 }
 .toppage-card .card-overlay {
   position: absolute;
@@ -65,42 +168,77 @@
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.2);
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.toppage-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+.toppage-card:hover img {
+  filter: brightness(1.2) contrast(1.1);
+}
+.toppage-card:hover .card-overlay {
+  background: rgba(0,0,0,0.1);
 }
 .toppage-card .card-title {
   position: absolute;
   left: 0;
-  top: 60px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
   text-align: center;
   color: white;
-  font-size: 30px;
+  font-size: clamp(20px, 3vw, 30px);
   font-family: 'Noto Serif JP', serif;
   font-weight: 700;
+  z-index: 2;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 .toppage-card .card-desc {
   position: absolute;
   left: 0;
-  bottom: 20px;
+  top: 60%;
   width: 100%;
   text-align: center;
   color: white;
-  font-size: 18px;
+  font-size: clamp(14px, 1.8vw, 18px);
   font-family: 'Noto Serif JP', serif;
+  background: none;
+  z-index: 2;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+.toppage-card:hover .card-title {
+  transform: translateY(-50%) scale(1.05);
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+.toppage-card:hover .card-desc {
+  transform: scale(1.02);
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
 }
 .toppage-info {
-  max-width: 1200px;
-  margin: 80px auto 0;
+  max-width: min(1200px, 90%);
+  margin: clamp(40px, 8vw, 80px) auto 0;
   background: #F4F4F4;
   border-radius: 20px;
-  padding: 40px 32px;
+  padding: clamp(20px, 4vw, 40px) clamp(16px, 3vw, 32px);
 }
-.toppage-info h2 {
-  color: #78B96C;
-  font-size: 26px;
-  font-family: 'Noto Sans JP', sans-serif;
+.toppage-info .latest-catch-title {
+  color: #fff;
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-family: 'Noto Serif JP', serif;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 24px;
+  margin: 0;
+  line-height: clamp(40px, 6vw, 60px);
+  background: #78B96C;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: clamp(200px, 26.8vw, 268px);
+  height: clamp(40px, 6vw, 60px);
+  margin: 0 auto clamp(16px, 3.2vw, 32px) auto;
 }
 .toppage-info ul {
   list-style: none;
@@ -109,12 +247,79 @@
 }
 .toppage-info li {
   border-bottom: 1px solid #aaa;
-  padding: 16px 0;
+  padding: clamp(8px, 1.6vw, 16px) 0;
   color: #191919;
-  font-size: 16px;
+  font-size: clamp(14px, 1.6vw, 16px);
   font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
+  transition: all 0.3s ease;
+}
+.toppage-info li:hover {
+  background-color: rgba(120, 185, 108, 0.05);
+  padding-left: 10px;
+}
+.toppage-info li a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+/* 1行を超える場合のフェードアウト効果 */
+.toppage-info li a::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, #F4F4F4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toppage-info li a[data-overflow="true"]::after {
+  opacity: 1;
+}
+.toppage-info li a:hover {
+  color: #78B96C;
+}
+
+.info-more-btn {
+  display: block;
+  width: 160px;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  background: #FFFFFF;
+  border: 2px solid #78B96C;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.info-more-btn-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #78B96C;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.info-more-btn:hover {
+  background: #78B96C;
+}
+
+.info-more-btn:hover .info-more-btn-label {
+  color: #FFFFFF;
 }
 
 /* --- 丈丸渡船についてセクション --- */
@@ -129,11 +334,13 @@
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  padding-left: 0;
 }
 .about-title-area {
   width: 677px;
   height: 80px;
   margin: 0 auto 32px auto;
+  padding-right: 72px;
   position: relative;
   display: flex;
   align-items: center;
@@ -146,7 +353,7 @@
 }
 .about-title {
   font-size: 48px;
-  font-family: 'Yu Gothic', sans-serif;
+  font-family: 'Noto Serif JP', serif;
   font-weight: 700;
   color: #191919;
   text-align: center;
@@ -164,6 +371,13 @@
   height: 487px;
   object-fit: cover;
   border-radius: 0;
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 130px;
+  margin-bottom: 0;
+  position: relative;
+  left: 0;
 }
 .about-text {
   width: 611px;
@@ -175,37 +389,39 @@
   line-height: 1.8;
 }
 .about-btn {
-  display: inline-block;
-  position: absolute;
-  right: 60px;
-  bottom: 30px;
-  background: #78B96C;
-  border-radius: 35px;
+  display: block;
+  width: 160px;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  background: #FFFFFF;
+  border: 2px solid #78B96C;
+  border-radius: 25px;
   text-decoration: none;
-  padding: 0;
+  transition: all 0.3s ease;
+}
+.about-btn--inline {
+  margin: 30px auto 0 auto;
+  width: 160px;
 }
 .about-btn-inner {
   display: flex;
   align-items: center;
-  background: #F3F3F3;
-  border-radius: 35px;
-  padding: 1px 24px 1px 8px;
-  height: 35px;
+  justify-content: center;
+  gap: 8px;
+  color: #78B96C;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.about-btn:hover {
+  background: #78B96C;
+}
+.about-btn:hover .about-btn-inner {
+  color: #FFFFFF;
 }
 .about-btn-arrow {
-  color: #78B96C;
-  font-size: 18px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 900;
-  margin-right: 8px;
-}
-.about-btn-label {
-  color: #78B96C;
-  font-size: 14px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
+  font-size: 20px;
 }
 
 /* --- 新着釣果セクション --- */
@@ -233,14 +449,15 @@
   justify-content: center;
 }
 .latest-catch-title {
-  color: #fff;
+  color: white;
   font-size: 26px;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Noto Serif JP', serif;
   font-weight: 700;
+  line-height: 60px;
   text-align: center;
   margin: 0;
-  line-height: 60px;
 }
+
 .latest-catch-cards {
   display: flex;
   flex-direction: row;
@@ -249,16 +466,39 @@
   align-items: flex-start;
   margin: 40px 0 0 16px;
 }
+
+/* 一覧ページでは2列レイアウト */
+.news-container .latest-catch-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  justify-content: center;
+  margin: 40px auto 0 auto;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.news-container .latest-catch-card {
+  width: 100%;
+  max-width: 378px;
+}
 .latest-catch-card {
   width: 378px;
-  height: 446px;
-  background: rgba(119,185,108,0.09);
+  height: 420px;
+  background: white;
   outline: 1px #78B96C solid;
   outline-offset: -1px;
   position: relative;
   display: flex;
   flex-direction: column;
   margin-right: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.latest-catch-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(120, 185, 108, 0.3);
+  background: rgba(119,185,108,0.09);
 }
 .latest-catch-card-imgwrap {
   width: 378px;
@@ -268,18 +508,61 @@
 }
 .latest-catch-card-imgwrap img {
   width: 100%;
-  height: 284px;
+  height: 252px;
   object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+/* お知らせと日記ページではスペースを全部埋める */
+.post-type-archive-news .latest-catch-card-imgwrap img,
+.post-type-archive-diary .latest-catch-card-imgwrap img {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* タグ・カテゴリ一覧ページでもスペースを全部埋める */
+.tag .latest-catch-card-imgwrap img,
+.category .latest-catch-card-imgwrap img,
+.tax-fish_species .latest-catch-card-imgwrap img {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* footer-logo.pngの場合のみcontainにする */
+.latest-catch-card-imgwrap img[src*="footer-logo.png"] {
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #f8f9fa;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.latest-catch-card:hover .latest-catch-card-imgwrap img {
+  filter: brightness(1.15) contrast(1.05);
+  transform: scale(1.02);
 }
 .latest-catch-card-title {
   width: 351px;
-  height: 59px;
+  min-height: 30px;
+  max-height: 60px;
   margin: 15px auto 0 auto;
   color: #202124;
   font-size: 18px;
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 700;
   line-height: 30px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.latest-catch-card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.latest-catch-card-title a:hover {
+  color: #78B96C;
 }
 .latest-catch-card-date {
   color: #777;
@@ -288,41 +571,88 @@
   font-weight: 500;
   line-height: 28.8px;
   margin-left: 15px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .latest-catch-card-desc {
   width: 355px;
+  height: 81px; /* 3行分の高さ (27px × 3行 = 81px) */
   margin: 10px auto 0 auto;
   color: #3C4043;
   font-size: 15px;
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 500;
   line-height: 27px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.latest-catch-card .catch-post-fish-species {
+  margin: 15px auto 5px auto;
+  width: 355px;
+}
+
+/* タグエリア全体の高さを固定 */
+.latest-catch-card .catch-post-tags {
+  margin: 15px auto 15px auto;
+  width: 355px;
+  min-height: 28px; /* タグがない場合でも高さを保証 */
+  max-height: 56px; /* 最大2行分の高さ */
+  overflow: hidden;
+}
+.latest-catch-card .fish-species-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-start;
+}
+.latest-catch-card .fish-species-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #78B96C;
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.latest-catch-card .fish-species-tag:hover {
+  background-color: #5A9B4A;
+  transform: translateY(-1px);
+}
+.latest-catch-card .fish-species-tag a {
+  color: inherit;
+  text-decoration: none;
 }
 .latest-catch-btn {
   display: block;
-  width: 262px;
-  height: 51px;
-  margin: 40px auto 0 auto;
+  width: 200px;
+  margin: 30px auto 0;
+  padding: 12px 24px;
   background: #78B96C;
-  overflow: hidden;
-  border-radius: 30px;
-  outline: 1px #78B96C solid;
-  outline-offset: -1px;
+  border: 2px solid #78B96C;
+  border-radius: 25px;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 .latest-catch-btn-label {
-  display: block;
-  width: 205px;
-  height: 25px;
-  margin: 13px auto 0 auto;
-  color: #F2F2F2;
-  font-size: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: 2px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.latest-catch-btn:hover {
+  background: #FFFFFF;
+}
+.latest-catch-btn:hover .latest-catch-btn-label {
+  color: #78B96C;
 }
 
 /* --- 料金についてセクション --- */
@@ -368,7 +698,7 @@
 }
 .price-card {
   width: 323px;
-  min-height: 524px;
+  min-height: 460px;
   background: #fff;
   outline: 1px #78B96C solid;
   outline-offset: -1px;
@@ -376,6 +706,14 @@
   display: flex;
   flex-direction: column;
   margin-right: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(120, 185, 108, 0.25);
+  outline: 2px #78B96C solid;
+  background: #fafff9;
 }
 .price-card-header {
   width: 100%;
@@ -406,18 +744,69 @@
   font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
-  margin-left: 10px;
-  margin-top: -32px;
-  margin-bottom: 0;
-  display: inline-block;
+  margin: -32px auto 0 auto;
+  display: block;
+  text-align: center;
+  position: relative;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* カセ・筏釣りのアイコン */
+#planA .price-card-title::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background-image: url('../images/fluent-emoji-high-contrast_fishing-pole.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* 近海チャーター船のアイコン */
+#planB .price-card-title::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background-image: url('../images/ion_boat-sharp.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+}
+
+/* 湾内チャーター船のアイコン */
+#planC .price-card-title::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background-image: url('../images/Vector.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
 }
 .price-card-sub {
   color: #fff;
   font-size: 12px;
   font-family: 'Noto Serif JP', serif;
   font-weight: 400;
-  margin-left: 111px;
-  margin-top: 5px;
+  margin: 5px auto 0 auto;
+  text-align: center;
+  display: block;
 }
 .price-card-main {
   width: 100%;
@@ -429,6 +818,11 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
+  transition: all 0.3s ease;
+}
+.price-card:hover .price-card-main {
+  background: #6AA856;
+  box-shadow: inset 0 2px 8px rgba(255,255,255,0.2);
 }
 .price-card-price {
   color: #fff;
@@ -437,13 +831,22 @@
   font-weight: 400;
   line-height: 64px;
   margin-top: 20px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+.price-card:hover .price-card-price {
+  transform: scale(1.05);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 .price-card-unit {
   color: #fff;
   font-size: 13px;
   font-family: 'Noto Serif JP', serif;
   font-weight: 400;
-  margin-top: 5px;
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: bottom;
+  margin-bottom: 10px;
 }
 .price-card-tax {
   color: #fff;
@@ -459,128 +862,360 @@
   font-weight: 400;
   line-height: 20.8px;
   text-align: center;
-  background: rgba(0,0,0,0.04);
+  background: #F7F7F7;
   width: 100%;
   margin: 0;
-  padding: 15px 0 0 0;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+}
+.price-card-desc:nth-of-type(even) {
+  background: #fff;
+}
+.price-card-desc--slash {
+  background: #f5f5f5;
+  color: #888;
+  font-style: italic;
+  position: relative;
+}
+
+.price-card-desc--slash::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom right, transparent 49%, #888 50%, transparent 51%);
 }
 .price-card-btn {
   display: block;
-  width: 166px;
-  height: 48px;
-  margin: 25px auto 20px auto;
+  width: 160px;
+  margin: 20px auto 20px auto;
+  padding: 12px 24px;
   background: #78B96C;
-  border-radius: 24px;
-  color: #fff;
-  font-size: 18px;
-  font-family: 'Noto Serif JP', serif;
-  font-weight: 400;
-  line-height: 28.8px;
-  text-align: center;
+  border: 2px solid #78B96C;
+  border-radius: 25px;
   text-decoration: none;
-  padding: 11px 0 0 0;
+  transition: all 0.3s ease;
+  text-align: center;
+  white-space: nowrap;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-/* --- アクセス・地図・紹介セクション --- */
-.toppage-access {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg, rgba(120,185,108,0.45) 0%, rgba(255,255,255,0.45) 100%);
-  margin: 80px 0 0 0;
-  padding: 0 0 40px 0;
+/* ボタンエリアの背景を薄いグレーに */
+.price-card {
+  background-color: #f5f5f5;
+  border: 1px solid #78B96C;
 }
-.access-title-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 19px;
-  margin: 55px auto 32px auto;
+
+.price-card-btn:hover {
+  background: #FFFFFF;
+  color: #78B96C;
 }
-.access-title-bar {
-  width: 45px;
-  height: 9px;
-}
-.access-title {
-  font-size: 48px;
-  font-family: 'Yu Gothic', sans-serif;
-  font-weight: 700;
-  color: #191919;
-  text-align: center;
-  margin: 0;
-}
-.access-desc {
-  width: 897px;
-  margin: 0 auto 40px auto;
-  color: #191919;
-  font-size: 16px;
-  font-family: 'Yu Gothic', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-align: center;
-}
-.access-map-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.access-map {
-  width: 900px;
-  height: 499px;
-  background: #E5E3DF;
-  overflow: hidden;
-  position: relative;
-}
-.access-map img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.access-map-side {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 32px;
-}
-.access-tel-btns {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 32px;
-  margin-top: 40px;
-}
+
 .access-tel-btn {
+  display: block;
+  width: 200px;
+  margin: 20px auto 0;
+  padding: 12px 24px;
+  background: #78B96C;
+  border: 2px solid #78B96C;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.access-tel-btn svg {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  vertical-align: middle;
+  display: inline-block;
+  margin-top: -8px;
+}
+
+.access-tel-btn-label {
+  display: inline-block;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-top: -15px;
+}
+
+.access-tel-btn-desc {
+  display: block;
+  color: #FFFFFF;
+  font-size: 12px;
+  margin-top: -2px;
+  margin-bottom: 2px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.access-tel-btn:hover {
+  background: #FFFFFF;
+}
+
+.access-tel-btn:hover .access-tel-btn-label,
+.access-tel-btn:hover .access-tel-btn-desc,
+.access-tel-btn:hover svg path {
+  color: #78B96C;
+  fill: #78B96C;
+}
+
+@media (max-width: 768px) {
+  .toppage-mainvisual {
+    margin-top: 60px; /* モバイルでのヘッダー高さ */
+  }
+  
+  .toppage-cards-row:first-child .toppage-card,
+  .toppage-cards-row:last-child .toppage-card {
+    width: 100%;
+  }
+  .toppage-card {
+    min-height: 200px;
+}
+  .toppage-info {
+    padding: 20px 16px;
+}
+  .toppage-info .latest-catch-title {
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .info-more-btn {
+    width: 200px;
+    height: 40px;
+}
+  .info-more-btn-label {
+    width: 160px;
+  font-size: 16px;
+  }
+
+  /* アーカイブページのスマホ表示：1カラム縦並び */
+  .news-container .latest-catch-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 0 20px;
+    max-width: none;
+  }
+  
+  .news-container .latest-catch-card {
+    max-width: none;
+    width: calc(100% - 32px);
+    margin: 0 16px;
+  }
+  
+  .latest-catch-card {
+    width: calc(100% - 32px);
+    margin: 0 16px;
+    max-width: none;
+  }
+  
+  .latest-catch-card-imgwrap {
+    width: 100%;
+  }
+
+  /* lines.png（about-title-bar）のスマホ表示縮小 */
+  .about-title-bar {
+    width: 30px;
+    height: 6px;
+  }
+
+  /* about-title-area全体のサイズ調整 */
+  .about-title-area {
+    width: 400px;
+    height: 60px;
+    margin: 0 auto 20px auto;
+    gap: 16px;
+  }
+
+  /* about-titleのフォントサイズ縮小 */
+  .about-title {
+    font-size: 32px;
+  }
+
+  /* その他のh2要素も小さく */
+  .latest-catch-title {
+    font-size: 20px;
+  }
+
+  .latest-catch-title-area {
+    width: 200px;
+    height: 50px;
+    margin: 0 auto 20px auto;
+  }
+
+  .toppage-info h2 {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    margin: 0 auto 20px auto;
+  }
+
+  /* about-imageを背景画像として配置（薄く） */
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .about-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 280px;
+    opacity: 0.15;
+    z-index: 1;
+    margin-top: 0;
+  }
+
+  /* about-textを前面に配置、左詰め */
+  .about-text {
+    width: 100%;
+    max-width: 350px;
+    font-size: 14px;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  .about-title {
+    font-size: 22px;
+  }
+
+  /* price-cardをスマホで横スライド対応 */
+  .price-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 40px 0 0 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 20px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .price-card {
+    width: 323px;
+    min-width: 323px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  /* スクロールバーのスタイリング */
+  .price-cards::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .price-cards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .price-cards::-webkit-scrollbar-thumb {
+    background: #78B96C;
+    border-radius: 4px;
+  }
+
+  .price-cards::-webkit-scrollbar-thumb:hover {
+    background: #5A9B4A;
+  }
+
+  /* 新着釣果セクションをスマホで横スライド対応 */
+  .latest-catch-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 17px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 40px 0 0 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .latest-catch-card {
+    width: 378px;
+    min-width: 378px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  /* 新着釣果セクションのスクロールバーのスタイリング */
+  .latest-catch-cards::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .latest-catch-cards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .latest-catch-cards::-webkit-scrollbar-thumb {
+    background: #78B96C;
+    border-radius: 4px;
+  }
+
+  .latest-catch-cards::-webkit-scrollbar-thumb:hover {
+    background: #5A9B4A;
+  }
+
+  /* info-more-btnのパディング調整 */
+  .info-more-btn {
+    padding: 5px 24px;
+  }
+
+  /* toppage-info li aのフォントサイズを小さく */
+  .toppage-info li a {
+    font-size: 14px;
+  }
+
+  /* toppage-cardのサイズを小さくする */
+  .toppage-card {
+    min-height: 160px;
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
+/* お知らせセクションのタイトル */
+.toppage-info h2 {
+  width: 268px;
+  height: 60px;
+  margin: 0 auto 32px auto;
+  background: #78B96C;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 262px;
-  height: 51px;
-  background: #78B96C;
-  border-radius: 30px;
-  color: #fff;
-  text-decoration: none;
-  font-family: 'Yu Gothic', sans-serif;
+  color: white;
+  font-size: 26px;
+  font-family: 'Noto Serif JP', serif;
   font-weight: 700;
-  font-size: 20px;
-  letter-spacing: 0.8px;
-  position: relative;
-}
-.access-tel-btn-label {
-  font-size: 20px;
-  font-family: 'Yu Gothic', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: #F2F2F2;
-}
-.access-tel-btn-desc {
-  font-size: 12px;
-  font-family: 'Yu Gothic', sans-serif;
-  font-weight: 700;
-  color: #fff;
-  margin-top: 2px;
+  text-align: center;
 } 

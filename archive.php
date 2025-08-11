@@ -1,65 +1,100 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying archive pages (catch archive)
  *
- * Used to display archive-type pages if nothing more specific matches a query.
- * For example, puts together date-based pages if no date.php file exists.
- *
- * If you'd like to further customize these archive views, you may create a
- * new template file for each one. For example, tag.php (Tag archives),
- * category.php (Category archives), author.php (Author archives), etc.
- *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package WordPress
- * @subpackage Twenty_Sixteen
- * @since Twenty Sixteen 1.0
+ * @package JOEMARU
+ * @subpackage JOEMARU
+ * @since JOEMARU 1.0
  */
 
 get_header(); ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+<div class="mainvisual">
+    <div>
+        <img src="<?php echo get_template_directory_uri(); ?>/images/tyoka.png" alt="メインビジュアル" />
+        <h1 class="news-title">釣果</h1>
+        <div class="mainvisual-caption">過去の釣果をご紹介</div>
+    </div>
+</div>
 
-		<?php if ( have_posts() ) : ?>
+<div class="news-container">
+    
+    <div class="news-content">
+        <div class="news-main">
+            <div class="latest-catch-cards">
+                <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+                    <article class="latest-catch-card">
+                        <div class="latest-catch-card-imgwrap">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php the_post_thumbnail('large', array('alt' => get_the_title())); ?>
+                                </a>
+                            <?php else : ?>
+                                <a href="<?php the_permalink(); ?>">
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/fish.png" alt="<?php the_title(); ?>" />
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                        <div class="latest-catch-card-title">
+                            <a href="<?php the_permalink(); ?>" style="color: inherit; text-decoration: none;">
+                                <?php the_title(); ?>
+                            </a>
+                        </div>
+                        <div class="latest-catch-card-date"><?php echo get_the_date('Y-m-d'); ?></div>
+                        <div class="latest-catch-card-desc"><?php 
+                            $excerpt = get_the_excerpt();
+                            if (empty($excerpt)) {
+                                $excerpt = wp_trim_words(get_the_content(), 30, '...');
+                            }
+                            echo esc_html($excerpt); 
+                        ?></div>
+                        
+                        <?php /*
+                        <div class="catch-post-tags">
+                            <?php
+                            // 魚種タグを表示
+                            $fish_species = get_the_terms(get_the_ID(), 'fish_species');
+                            if ($fish_species && !is_wp_error($fish_species)) :
+                            ?>
+                                <div class="catch-post-fish-species">
+                                    <div class="fish-species-list">
+                                        <?php foreach ($fish_species as $species) : ?>
+                                            <span class="fish-species-tag">
+                                                <a href="<?php echo get_term_link($species); ?>"><?php echo esc_html($species->name); ?></a>
+                                            </span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        */ ?>
+                    </article>
+                <?php endwhile; ?>
+                
+                <?php else : ?>
+                    <p class="news-no-posts">まだ釣果が投稿されていません。</p>
+                <?php endif; ?>
+            </div>
+            
+            <!-- ページネーションを投稿一覧の直下に配置 -->
+            <?php if (have_posts()) : ?>
+                <div class="news-pagination">
+                    <?php
+                    the_posts_pagination(array(
+                        'mid_size' => 2,
+                        'prev_text' => '‹‹',
+                        'next_text' => '››',
+                        'class' => 'news-pagination-inner',
+                    ));
+                    ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        
+        <div class="news-sidebar-wrapper">
+            <?php get_template_part('template-parts/news-sidebar'); ?>
+        </div>
+    </div>
+</div>
 
-			<header class="page-header">
-				<?php
-					the_archive_title( '<h1 class="page-title">', '</h1>' );
-					the_archive_description( '<div class="taxonomy-description">', '</div>' );
-				?>
-			</header><!-- .page-header -->
-
-			<?php
-			// Start the Loop.
-			while ( have_posts() ) : the_post();
-
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_format() );
-
-			// End the loop.
-			endwhile;
-
-			// Previous/next page navigation.
-			the_posts_pagination( array(
-				'prev_text'          => __( 'Previous page', 'twentysixteen' ),
-				'next_text'          => __( 'Next page', 'twentysixteen' ),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentysixteen' ) . ' </span>',
-			) );
-
-		// If no content, include the "No posts found" template.
-		else :
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
-<?php get_sidebar(); ?>
-<?php get_footer(); ?>
+<?php get_footer(); ?> 

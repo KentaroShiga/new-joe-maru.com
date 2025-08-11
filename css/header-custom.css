@@ -1,92 +1,175 @@
 /* ヘッダー用カスタムCSS */
-.header-custom-bar {
-  width: 100vw;
-  min-width: 320px;
-  height: 100px;
-  position: relative;
-  background: #78B96C;
-  overflow: hidden;
+html, body {
   margin: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  background-color: #fff;
+}
+
+body {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.site {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 1500px;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
+
+.site-inner {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-custom-bar {
+  width: 100%;
+  height: clamp(60px, 10vw, 100px);
+  background: #78B96C;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* WordPressの管理バーが表示されている時の調整 */
+.admin-bar .header-custom-bar {
+  top: 32px;
+}
+
+/* モバイル時の管理バー高さ調整 */
+@media screen and (max-width: 782px) {
+  .admin-bar .header-custom-bar {
+    top: 46px;
+  }
+}
 .header-custom-logo {
-  width: 194.84px;
-  height: 48px;
+  width: clamp(120px, 15vw, 194.84px);
+  height: auto;
   position: absolute;
   left: 16px;
-  top: 26px;
+  top: 43%;
+  transform: translateY(-50%);
 }
 .header-custom-ic {
-  width: 119px;
-  height: 15px;
+  width: clamp(80px, 10vw, 119px);
+  height: auto;
   position: absolute;
   left: 54px;
-  top: 75px;
+  top: 68%;
+  transform: translateY(-50%);
   text-align: center;
   color: white;
-  font-size: 13px;
+  font-size: clamp(10px, 1.2vw, 13px);
   font-family: Merriweather, serif;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 1.2;
   word-wrap: break-word;
 }
 .header-custom-nav {
   position: absolute;
-  left: 250px;
-  top: 22px;
-  height: 56px;
+  left: clamp(200px, 25vw, 250px);
+  top: 50%;
+  transform: translateY(-50%);
+  height: auto;
   display: flex;
   align-items: center;
-  gap: 18px;
+  justify-content: center;
+  gap: clamp(8px, 1.5vw, 18px);
   z-index: 2;
 }
 .header-custom-nav a {
   color: white;
-  font-size: 16px;
+  font-size: clamp(14px, 1.2vw, 16px);
   font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
   text-decoration: none;
-  padding: 8px 12px;
+  padding: clamp(4px, 0.8vw, 8px) clamp(6px, 1.2vw, 12px);
   border-radius: 8px;
   white-space: nowrap;
   background: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.header-custom-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+.header-custom-nav a:hover::after {
+  width: calc(100% - 24px);
 }
 .header-custom-nav a.active {
   background: #78B96C;
 }
+.header-custom-nav a.active::after {
+  display: none;
+}
 .header-custom-telarea {
   position: absolute;
-  right: 30px;
-  top: 0;
-  height: 100px;
+  right: clamp(15px, 2vw, 30px);
+  top: 50%;
+  transform: translateY(-50%);
+  height: auto;
   display: flex;
   align-items: center;
+  justify-content: center;
   z-index: 2;
 }
 .header-custom-telicon {
   display: flex;
   align-items: center;
-  margin-right: 10px;
+  margin-right: clamp(5px, 1vw, 10px);
+  width: clamp(20px, 2.5vw, 30px);
+  height: auto;
 }
 .header-custom-telnums {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
 }
 .header-custom-telnums div {
   color: #F2F2F2;
-  font-size: 20px;
+  font-size: clamp(16px, 1.8vw, 20px);
   font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
   line-height: 1.2;
 }
-body {
-  overflow-x: hidden;
+.header-custom-telnums a {
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.header-custom-telnums a:hover {
+  color: #000000;
 }
 .toppage-mainvisual {
   width: 100%;
@@ -94,4 +177,226 @@ body {
   margin: 0 auto;
   position: relative;
   background: #fff;
+}
+
+.header-custom-logo-link {
+  display: block;
+  text-decoration: none;
+}
+
+.header-custom-logo-link:hover {
+  opacity: 0.8;
+}
+
+/* ハンバーガーメニューボタン */
+.hamburger-menu {
+  display: none;
+  position: absolute;
+  right: 20px;
+  top: 55%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 1001;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  box-sizing: border-box;
+}
+
+.hamburger-line {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* モバイルメニューオーバーレイ */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* モバイルメニュー */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: #78B96C;
+  z-index: 1000;
+  transition: right 0.3s ease;
+  padding-top: 80px;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+.mobile-menu-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.mobile-menu-nav a {
+  color: white;
+  font-size: 18px;
+  font-family: 'Yu Gothic', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-nav a:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu-nav a:hover,
+.mobile-menu-nav a.active {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 10px;
+}
+
+.mobile-menu-tel {
+  padding: 20px;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  margin-top: 20px;
+}
+
+.mobile-menu-tel h4 {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-family: 'Yu Gothic', sans-serif;
+}
+
+.mobile-menu-tel a {
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu-tel a:hover {
+  color: #333;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1200px) {
+  .header-custom-nav {
+    left: clamp(180px, 20vw, 220px);
+    gap: clamp(6px, 1.2vw, 12px);
+  }
+  
+  .header-custom-nav a {
+    font-size: clamp(12px, 1.1vw, 14px);
+    padding: clamp(3px, 0.6vw, 6px) clamp(4px, 0.8vw, 8px);
+  }
+}
+
+/* 1024px専用の調整 - メニューと電話番号の配置を最適化 */
+@media (max-width: 1024px) and (min-width: 1001px) {
+  .header-custom-nav {
+    left: clamp(160px, 18vw, 180px);
+    gap: clamp(4px, 0.8vw, 8px);
+  }
+  
+  .header-custom-nav a {
+    font-size: clamp(11px, 1vw, 13px);
+    padding: clamp(2px, 0.4vw, 4px) clamp(3px, 0.6vw, 6px);
+    letter-spacing: 0.4px;
+  }
+  
+  .header-custom-telarea {
+    right: clamp(10px, 1.5vw, 20px);
+  }
+  
+  .header-custom-telnums div {
+    font-size: clamp(14px, 1.6vw, 18px);
+  }
+}
+
+@media (max-width: 1000px) {
+  .header-custom-nav {
+    display: none;
+  }
+  
+  .header-custom-ic {
+    display: none;
+  }
+  
+  .hamburger-menu {
+    display: flex;
+  }
+  
+  .header-custom-telarea {
+    right: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-custom-bar {
+    height: 60px;
+  }
+  
+  .header-custom-telarea {
+    display: none;
+  }
+  
+  .hamburger-menu {
+    right: 15px;
+  }
+  
+  /* モバイルでは電話番号のホバーエフェクトを調整 */
+  .header-custom-telnums a:hover {
+    color: #333333; /* モバイルでは少し薄めの黒 */
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-menu {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .mobile-menu.active {
+    right: 0;
+  }
 } 

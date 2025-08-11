@@ -1,0 +1,239 @@
+/* サイドバー */
+.sidebar {
+    width: 300px;
+    position: relative;
+}
+
+.sidebar-box {
+    width: 300px;
+    background: rgba(255, 255, 255, 0);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    outline: 1px #9F9F9F solid;
+    outline-offset: -1px;
+    margin-bottom: 20px;
+}
+
+.sidebar-header {
+    width: 298px;
+    height: 40px;
+    background: #78B96C;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sidebar-header i {
+    margin-right: 10px;
+}
+
+.sidebar-content {
+    width: 298px;
+    background: white;
+    padding: 20px;
+}
+
+/* プロフィール */
+.sidebar-profile-image {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: block;
+}
+
+.sidebar-profile-name {
+    text-align: center;
+    color: #202124;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.sidebar-profile-desc {
+    color: #3C4043;
+    font-size: 15px;
+    line-height: 25px;
+    margin-bottom: 20px;
+}
+
+.sidebar-sns-text {
+    text-align: center;
+    color: #777777;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.sidebar-sns-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.sidebar-sns-icon {
+    width: 35px;
+    height: 35px;
+    background: #78B96C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+/* Instagram */
+.sidebar-instagram {
+    border: 1px solid #DBDBDB;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+.sidebar-instagram-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #DBDBDB;
+}
+
+.sidebar-instagram-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.sidebar-instagram-info {
+    flex: 1;
+}
+
+.sidebar-instagram-username {
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.sidebar-instagram-followers {
+    color: #737373;
+    font-size: 12px;
+}
+
+.sidebar-instagram-follow {
+    background: #0095F6;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.sidebar-instagram-image img {
+    width: 100%;
+    height: auto;
+}
+
+.sidebar-instagram-actions {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    border-bottom: 1px solid #DBDBDB;
+}
+
+.sidebar-instagram-likes {
+    padding: 0 10px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.sidebar-instagram-caption,
+.sidebar-instagram-comments {
+    padding: 0 10px;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.sidebar-instagram-tags {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.sidebar-instagram-tags a {
+    color: #00376B;
+    font-size: 14px;
+}
+
+.sidebar-instagram-comment-box {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #DBDBDB;
+}
+
+.sidebar-instagram-comment-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.sidebar-instagram-comment-box button {
+    background: none;
+    border: none;
+    color: #0095F6;
+    font-size: 20px;
+}
+
+.sidebar-instagram-follow-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #FDF6E1;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    outline: 1px #CCCCCC solid;
+    padding: 10px;
+    color: #777777;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.sidebar-instagram-follow-btn i {
+    color: #CF2E92;
+    font-size: 32px;
+}
+
+/* アーカイブ */
+.sidebar-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-content li {
+    margin-bottom: 10px;
+}
+
+.sidebar-content a {
+    color: #3C4043;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 1200px) {
+    .sidebar {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        margin-top: 40px;
+    }
+} 

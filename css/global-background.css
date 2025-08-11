@@ -1,0 +1,140 @@
+/* 料金、アクセス、船長ページの背景統一（特定ページのみ） */
+
+/* 料金ページ */
+body.page-template-page-price,
+body[class*="page-price"],
+body.page-id-price {
+    background-color: rgba(119,185,108,0.31) !important;
+    min-height: 100vh;
+}
+
+/* アクセスページ */
+body.page-template-page-access,
+body[class*="page-access"],
+body.page-id-access {
+    background-color: rgba(119,185,108,0.31) !important;
+    min-height: 100vh;
+}
+
+/* 船長ページ */
+body.page-template-page-captain,
+body[class*="page-captain"],
+body.page-id-captain {
+    background-color: rgba(119,185,108,0.31) !important;
+    min-height: 100vh;
+}
+
+/* 特定ページのコンテンツエリア背景統一 */
+body.page-template-page-price .site,
+body.page-template-page-price .site-header,
+body.page-template-page-price .site-main,
+body[class*="page-price"] .site,
+body[class*="page-price"] .site-header,
+body[class*="page-price"] .site-main,
+body.page-template-page-access .site,
+body.page-template-page-access .site-header,
+body.page-template-page-access .site-main,
+body[class*="page-access"] .site,
+body[class*="page-access"] .site-header,
+body[class*="page-access"] .site-main,
+body.page-template-page-captain .site,
+body.page-template-page-captain .site-header,
+body.page-template-page-captain .site-main,
+body[class*="page-captain"] .site,
+body[class*="page-captain"] .site-header,
+body[class*="page-captain"] .site-main {
+    background-color: transparent;
+}
+
+/* フッターは白のまま保持 */
+body.page-template-page-price .site-footer,
+body[class*="page-price"] .site-footer,
+body.page-template-page-access .site-footer,
+body[class*="page-access"] .site-footer,
+body.page-template-page-captain .site-footer,
+body[class*="page-captain"] .site-footer {
+    background-color: white !important;
+}
+
+/* フッター内のfooter-inner以下は必ず白背景 */
+body.page-template-page-price .footer-inner,
+body[class*="page-price"] .footer-inner,
+body.page-template-page-access .footer-inner,
+body[class*="page-access"] .footer-inner,
+body.page-template-page-captain .footer-inner,
+body[class*="page-captain"] .footer-inner,
+body.page-template-page-price .footer-inner *,
+body[class*="page-price"] .footer-inner *,
+body.page-template-page-access .footer-inner *,
+body[class*="page-access"] .footer-inner *,
+body.page-template-page-captain .footer-inner *,
+body[class*="page-captain"] .footer-inner * {
+    background-color: white !important;
+}
+
+/* フッターロゴ画像の配置とスタイルを復元 */
+body.page-template-page-price .footer-logo-img,
+body[class*="page-price"] .footer-logo-img,
+body.page-template-page-access .footer-logo-img,
+body[class*="page-access"] .footer-logo-img,
+body.page-template-page-captain .footer-logo-img,
+body[class*="page-captain"] .footer-logo-img {
+    display: block !important;
+    margin: 0 auto 0 auto !important;
+    width: clamp(200px, 32vw, 320px) !important;
+    height: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    position: relative !important;
+    z-index: 1 !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+
+/* フッターの各セクションも白背景を確実に */
+body.page-template-page-price .footer,
+body[class*="page-price"] .footer,
+body.page-template-page-access .footer,
+body[class*="page-access"] .footer,
+body.page-template-page-captain .footer,
+body[class*="page-captain"] .footer {
+    background-color: white !important;
+}
+
+/* 各ページのコンテンツエリアは透明にしてbody背景を活かす */
+.price-detail,
+.price-detail-container,
+.captain-bg,
+.captain-container,
+.footer-map-container,
+.access-container {
+    background-color: transparent !important;
+}
+
+/* アクセスセクションはフッター内なので背景調整 */
+.toppage-access {
+    background-color: rgba(119,185,108,0.31) !important;
+    margin-bottom: 0 !important;
+}
+
+/* WordPressデフォルトフッターを非表示 */
+.site-footer {
+    display: none !important;
+}
+
+/* 丈丸渡船のコピーライト表記を最下部に配置 */
+.footer-bar {
+    position: relative;
+    z-index: 999;
+    margin-top: 0 !important;
+}
+
+/* WordPressテーマのbody疑似要素を無効化 */
+body:not(.custom-background-image):before,
+body:not(.custom-background-image):after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    background-image: none !important;
+    opacity: 0 !important;
+} 

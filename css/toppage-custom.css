@@ -90,7 +90,7 @@
 }
 .toppage-section-cards-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 360px), 50%));
+  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 30vw, 360px), 50%));
   gap: clamp(20px, 3vw, 40px);
   justify-content: center;
 }
@@ -665,18 +665,40 @@
   width: 100%;
   background: #fff;
   margin: 80px auto 0;
-  padding: 0 0 40px 0;
+  padding: 40px 0;
 }
-.price-inner {
-  max-width: 1196px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
+
+.price-season-block {
+  margin-bottom: 60px;
 }
+
+.price-season-heading {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.price-season-arrow {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.price-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  justify-content: center;
+  align-items: stretch;
+  margin-top: 40px;
+}
+
 .price-title-area {
   width: 268px;
   height: 60px;
-  margin: 27px auto 32px auto;
+  margin: 0 auto 32px auto;
   background: #78B96C;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -684,6 +706,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .price-title {
   color: #fff;
   font-size: 26px;
@@ -691,235 +714,135 @@
   font-weight: 700;
   text-align: center;
   margin: 0;
-  line-height: 60px;
+  line-height: 1;
 }
-.price-cards {
-  display: flex;
-  flex-direction: row;
-  gap: 25px;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 60px 0 0 0;
-}
+
+
+
 .price-card {
   width: 323px;
-  min-height: 460px;
+  min-height: 520px;
   background: #fff;
   outline: 1px #78B96C solid;
   outline-offset: -1px;
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-right: 0;
   transition: all 0.3s ease;
-  cursor: pointer;
+  border-radius: 0;
+  overflow: hidden;
 }
+
 .price-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(120, 185, 108, 0.25);
-  outline: 2px #78B96C solid;
   background: #fafff9;
 }
+
 .price-card-header {
   width: 100%;
   height: 92px;
   background: #7E7E7E;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
-}
-.price-card-header--kase { background: #7E7E7E; }
-.price-card-header--charter { background: #7E7E7E; }
-.price-card-header--bay { background: #7E7E7E; }
-.price-card-icon {
-  width: 32px;
-  height: 32px;
-  background: #fff;
-  border-radius: 0;
-  margin-left: 60px;
-  margin-bottom: 0;
-  display: inline-block;
-}
-.price-card-title {
   color: #fff;
+}
+
+.price-card-title {
   font-size: 20px;
-  font-family: 'Yu Gothic', sans-serif;
   font-weight: 700;
   letter-spacing: 0.8px;
-  margin: 0 auto;
-  display: block;
-  text-align: center;
   position: relative;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 0 30px;
 }
 
-/* カセ・筏釣りのアイコン */
-#planA .price-card-title::before {
-  content: '';
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  background-image: url('../images/fluent-emoji-high-contrast_fishing-pole.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(0) invert(1);
-}
-
-/* 近海チャーター船のアイコン */
-#planB .price-card-title::before {
-  content: '';
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  background-image: url('../images/ion_boat-sharp.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(0) invert(1);
-}
-
-/* 湾内チャーター船のアイコン */
-#planC .price-card-title::before {
-  content: '';
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  background-image: url('../images/Vector.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  filter: brightness(0) invert(1);
-}
 .price-card-sub {
-  color: #fff;
   font-size: 12px;
-  font-family: 'Noto Serif JP', serif;
-  font-weight: 400;
-  margin: 5px auto 0 auto;
-  text-align: center;
-  display: block;
+  margin-top: 5px;
 }
+
 .price-card-main {
   width: 100%;
   height: 123px;
   background: #78B96C;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0;
-  transition: all 0.3s ease;
+  color: #fff;
 }
-.price-card:hover .price-card-main {
-  background: #6AA856;
-  box-shadow: inset 0 2px 8px rgba(255,255,255,0.2);
+
+.price-card-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
 }
+
 .price-card-price {
-  color: #fff;
   font-size: 40px;
-  font-family: 'Noto Serif JP', serif;
   font-weight: 400;
-  line-height: 64px;
-  margin: 0;
-  display: inline-block;
-  transition: all 0.3s ease;
+  font-family: 'Noto Serif JP', serif;
 }
-.price-card:hover .price-card-price {
-  transform: scale(1.05);
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
+
 .price-card-unit {
-  color: #fff;
   font-size: 13px;
-  font-family: 'Noto Serif JP', serif;
-  font-weight: 400;
-  display: inline-block;
-  margin-left: 5px;
-  vertical-align: bottom;
-  margin-bottom: 10px;
 }
+
 .price-card-tax {
-  color: #fff;
-  font-size: 12px;
-  font-family: 'Noto Serif JP', serif;
-  font-weight: 400;
-  margin-top: 5px;
+  font-size: 11px !important;
+  margin-top: 4px !important;
+  background-color: #78B96C !important;
+  color: #fff !important;
+  padding: 2px 12px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  text-align: center !important;
+  width: auto !important;
+  border: none !important;
 }
+
+.price-card-body {
+  flex-grow: 1;
+}
+
 .price-card-desc {
   color: #3A3A3A;
   font-size: 13px;
   font-family: 'Noto Serif JP', serif;
-  font-weight: 400;
-  line-height: 20.8px;
   text-align: center;
   background: #F7F7F7;
-  width: 100%;
-  margin: 0;
-  padding: 15px 0;
+  padding: 15px 10px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
+  line-height: 1.6;
 }
+
 .price-card-desc:nth-of-type(even) {
   background: #fff;
 }
-.price-card-desc--slash {
-  background: #f5f5f5;
-  color: #888;
-  font-style: italic;
-  position: relative;
-}
 
-.price-card-desc--slash::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom right, transparent 49%, #888 50%, transparent 51%);
-}
 .price-card-btn {
   display: block;
-  width: 160px;
-  margin: 20px auto 20px auto;
-  padding: 12px 24px;
+  width: 180px; /* 幅を少し広げて確実に1行に収める */
+  margin: 20px auto;
+  padding: 12px 10px; /* パディングを調整 */
   background: #78B96C;
+  color: #fff;
   border: 2px solid #78B96C;
   border-radius: 25px;
-  text-decoration: none;
-  transition: all 0.3s ease;
   text-align: center;
-  white-space: nowrap;
-  color: #FFFFFF;
-  font-size: 16px;
+  text-decoration: none;
   font-weight: bold;
-}
-
-/* ボタンエリアの背景を薄いグレーに */
-.price-card {
-  background-color: #f5f5f5;
-  border: 1px solid #78B96C;
+  white-space: nowrap; /* 改行を禁止 */
+  transition: all 0.3s ease;
 }
 
 .price-card-btn:hover {
-  background: #FFFFFF;
+  background: #fff;
   color: #78B96C;
 }
 

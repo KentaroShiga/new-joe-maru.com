@@ -145,11 +145,17 @@ get_header(); ?>
 			</div>
 		</section>
 
-		<!-- 新着釣果セクション -->
+		<!-- カレンダーで釣果を確認セクション -->
+		<section class="fishing-calendar-section">
+			<h2>カレンダーで釣果確認</h2>
+			<?php echo display_fishing_calendar(); ?>
+		</section>
+
+		<!-- 最新の釣果セクション -->
 		<section class="toppage-latest-catch">
 			<div class="latest-catch-inner">
 				<div class="latest-catch-title-area">
-					<h2 class="latest-catch-title">新着釣果</h2>
+					<h2 class="latest-catch-title">最新の釣果</h2>
 				</div>
 				<div class="latest-catch-cards">
 					<?php

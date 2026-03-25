@@ -2388,3 +2388,201 @@ function joemaru_pdf_management_page() {
     
     echo '</div>';
 }
+
+/**
+ * 釣果カレンダー機能
+ */
+
+// 指定月の釣果投稿データ取得
+function get_fishing_calendar_data($year, $month) {
+    $posts_by_date = array();
+    
+    $query = new WP_Query(array(
+        'post_type' => 'post',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'date_query' => array(
+            array(
+                'year' => $year,
+                'month' => $month
+            )
+        ),
+        'orderby' => 'date',
+        'order' => 'ASC'
+    ));
+    
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $date = get_the_date('j'); // 日付のみ
+            if (!isset($posts_by_date[$date])) {
+                $posts_by_date[$date] = array();
+            }
+            $posts_by_date[$date][] = array(
+                'id' => get_the_ID(),
+                'title' => get_the_title(),
+                'url' => get_permalink()
+            );
+        }
+        wp_reset_postdata();
+    }
+    
+    return $posts_by_date;
+}
+
+// カレンダー表示関数
+function display_fishing_calendar($year = null, $month = null) {
+    if (!$year) $year = date('Y');
+    if (!$month) $month = date('n');
+    
+    $posts_data = get_fishing_calendar_data($year, $month);
+    $days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+    $first_day_of_week = date('w', mktime(0, 0, 0, $month, 1, $year));
+    
+    $prev_month = $month - 1;
+    $prev_year = $year;
+    if ($prev_month < 1) {
+        $prev_month = 12;
+        $prev_year--;
+    }
+    
+    $next_month = $month + 1;
+    $next_year = $year;
+    if ($next_month > 12) {
+        $next_month = 1;
+        $next_year++;
+    }
+    
+    ob_start();
+    ?>
+    <div class="fishing-calendar-container" data-year="<?php echo $year; ?>" data-month="<?php echo $month; ?>" data-debug="true">
+        <div class="calendar-header">
+            <button class="calendar-nav-btn prev-month" data-year="<?php echo $prev_year; ?>" data-month="<?php echo $prev_month; ?>">
+                &lt;
+            </button>
+            <div class="calendar-selectors">
+                <select class="year-selector" data-current-year="<?php echo $year; ?>">
+                    <?php
+                    $current_year = date('Y');
+                    $start_year = 2017;
+                    $end_year = $current_year + 1;
+                    for ($y = $start_year; $y <= $end_year; $y++) {
+                        $selected = ($y == $year) ? 'selected' : '';
+                        echo '<option value="' . $y . '" ' . $selected . '>' . $y . '</option>';
+                    }
+                    ?>
+                </select>
+                <select class="month-selector" data-current-month="<?php echo $month; ?>">
+                    <?php
+                    for ($m = 1; $m <= 12; $m++) {
+                        $selected = ($m == $month) ? 'selected' : '';
+                        echo '<option value="' . $m . '" ' . $selected . '>' . $m . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <button class="calendar-nav-btn next-month" data-year="<?php echo $next_year; ?>" data-month="<?php echo $next_month; ?>">
+                &gt;
+            </button>
+        </div>
+        
+        <div class="calendar-grid">
+            <div class="calendar-weekdays">
+                <div class="weekday">日</div>
+                <div class="weekday">月</div>
+                <div class="weekday">火</div>
+                <div class="weekday">水</div>
+                <div class="weekday">木</div>
+                <div class="weekday">金</div>
+                <div class="weekday">土</div>
+            </div>
+            
+            <div class="calendar-days">
+                <?php
+                // 前月の空白日を埋める
+                for ($i = 0; $i < $first_day_of_week; $i++) {
+                    echo '<div class="calendar-day empty"></div>';
+                }
+                
+                // 当月の日付を表示
+                for ($day = 1; $day <= $days_in_month; $day++) {
+                    $has_posts = isset($posts_data[$day]);
+                    $class = 'calendar-day';
+                    if ($has_posts) {
+                        $class .= ' has-posts';
+                    }
+                    
+                    if ($has_posts) {
+                        $first_post = $posts_data[$day][0];
+                        echo '<div class="' . $class . '" data-date="' . $year . '-' . sprintf('%02d', $month) . '-' . sprintf('%02d', $day) . '" data-url="' . esc_url($first_post['url']) . '">';
+                        echo '<span class="day-number">' . $day . '</span>';
+                        echo '<span class="post-indicator">●</span>';
+                        echo '</div>';
+                    } else {
+                        echo '<div class="' . $class . '">';
+                        echo '<span class="day-number">' . $day . '</span>';
+                        echo '</div>';
+                    }
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+// カレンダー用CSS・JSを読み込み
+function enqueue_fishing_calendar_assets() {
+    if (is_front_page()) {
+        wp_enqueue_style(
+            'fishing-calendar-style',
+            get_template_directory_uri() . '/css/calendar-custom.css',
+            array(),
+            '1.0.1' // バージョンアップ
+        );
+        
+        wp_enqueue_script(
+            'fishing-calendar-script',
+            get_template_directory_uri() . '/js/calendar-navigation.js',
+            array('jquery'),
+            '1.0.6', // バージョンアップ
+            true
+        );
+        
+        // AJAX用のURL設定
+        wp_localize_script('fishing-calendar-script', 'calendar_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('calendar_nonce'),
+            'debug' => true // デバッグフラグ追加
+        ));
+        
+        // デバッグログ
+        error_log('Calendar assets enqueued for front page');
+    }
+}
+add_action('wp_enqueue_scripts', 'enqueue_fishing_calendar_assets');
+
+// AJAX処理でカレンダー更新
+function ajax_update_calendar() {
+    check_ajax_referer('calendar_nonce', 'nonce');
+    
+    $year = intval($_POST['year']);
+    $month = intval($_POST['month']);
+    
+    // デバッグログ
+    error_log('Calendar AJAX: year=' . $year . ', month=' . $month);
+    
+    if ($year && $month && $year >= 2017 && $year <= 2030 && $month >= 1 && $month <= 12) {
+        $calendar_html = display_fishing_calendar($year, $month);
+        error_log('Calendar HTML generated, length: ' . strlen($calendar_html));
+        echo $calendar_html;
+    } else {
+        error_log('Calendar AJAX: Invalid parameters - year=' . $year . ', month=' . $month);
+        echo display_fishing_calendar(); // フォールバック
+    }
+    
+    wp_die();
+}
+add_action('wp_ajax_update_calendar', 'ajax_update_calendar');
+add_action('wp_ajax_nopriv_update_calendar', 'ajax_update_calendar');

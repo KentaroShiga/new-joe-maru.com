@@ -1,0 +1,481 @@
+/**
+ * NewJoeMaru 釣果カレンダー専用CSS
+ * 
+ * @package JOEMARU
+ * @since 1.0.0
+ */
+
+/* ==========================================================================
+   カラーパレット（NewJoeMaruブランド準拠）
+   ========================================================================== */
+
+/* NewJoeMaruテーマの正確な緑色を直接指定 */
+
+/* ==========================================================================
+   カレンダーセクション全体
+   ========================================================================== */
+
+.fishing-calendar-section {
+  background: #f8f9fa;
+  padding: 40px 20px;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.fishing-calendar-section h2 {
+  width: 320px;
+  height: 60px;
+  margin: 0 auto 32px auto;
+  background: #78B96C;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 26px;
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   カレンダーコンテナ
+   ========================================================================== */
+
+.fishing-calendar-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   カレンダーヘッダー（月送りナビゲーション）
+   ========================================================================== */
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  gap: 10px;
+}
+
+.calendar-selectors {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.year-selector,
+.month-selector {
+  padding: 6px 10px;
+  border: 2px solid #78B96C;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #78B96C;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2378B96C' viewBox='0 0 16 16'%3e%3cpath d='m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 12px;
+  padding-right: 26px;
+}
+
+.year-selector:hover,
+.month-selector:hover {
+  background-color: #f8f9fa;
+  border-color: #5A9B4A;
+}
+
+.year-selector:focus,
+.month-selector:focus {
+  outline: none;
+  border-color: #5A9B4A;
+  box-shadow: 0 0 0 3px rgba(120, 185, 108, 0.2);
+}
+
+.calendar-nav-btn {
+  background: #78B96C !important;
+  color: #ffffff !important;
+  border: none !important;
+  outline: none !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none !important;
+}
+
+.calendar-nav-btn:hover {
+  background: #5A9B4A !important;
+  color: #ffffff !important;
+  transform: scale(1.1);
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.calendar-nav-btn:active {
+  background: #5A9B4A !important;
+  color: #ffffff !important;
+  transform: scale(0.95);
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.calendar-nav-btn:focus {
+  background: #78B96C !important;
+  color: #ffffff !important;
+  outline: 2px solid #ffd700 !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   カレンダーグリッド
+   ========================================================================== */
+
+.calendar-grid {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #78B96C;
+}
+
+.weekday {
+  padding: 12px 8px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 14px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   カレンダー日付セル
+   ========================================================================== */
+
+.calendar-day {
+  min-height: 50px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  background: #ffffff;
+}
+
+.calendar-day.empty {
+  background: #f5f5f5;
+  cursor: default;
+}
+
+.calendar-day:not(.empty):hover {
+  background: #f0f8ff;
+  transform: scale(1.05);
+}
+
+.calendar-day.has-posts {
+  background: #78B96C;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.calendar-day.has-posts:hover {
+  background: #5A9B4A;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.day-number {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.post-indicator {
+  font-size: 8px;
+  margin-top: 2px;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   カレンダー凡例（非表示）
+   ========================================================================== */
+
+.calendar-legend {
+  display: none;
+}
+
+/* ==========================================================================
+   レスポンシブ対応
+   ========================================================================== */
+
+@media screen and (max-width: 768px) {
+  .fishing-calendar-section {
+    padding: 20px 15px;
+  }
+  
+  .fishing-calendar-section h2 {
+    width: 250px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .fishing-calendar-container {
+    padding: 15px;
+  }
+  
+  .calendar-selectors {
+    gap: 8px;
+    flex-direction: row;
+  }
+  
+  .year-selector,
+  .month-selector {
+    padding: 5px 6px;
+    font-size: 14px;
+    padding-right: 24px;
+    background-size: 10px;
+    background-position: right 5px center;
+    flex: 1;
+    min-width: 60px;
+  }
+  
+  .year-selector {
+    min-width: 70px;
+  }
+  
+  .calendar-nav-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .calendar-day {
+    min-height: 40px;
+  }
+  
+  .weekday {
+    padding: 8px 4px;
+    font-size: 12px;
+  }
+  
+  .day-number {
+    font-size: 12px;
+  }
+  
+  .post-indicator {
+    font-size: 6px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .fishing-calendar-section h2 {
+    width: 260px;
+    height: 45px;
+    font-size: 18px;
+  }
+  
+  .calendar-header {
+    padding: 0 3px;
+    gap: 6px;
+  }
+  
+  .calendar-selectors {
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  
+  .year-selector,
+  .month-selector {
+    padding: 4px 5px;
+    font-size: 13px;
+    padding-right: 22px;
+    background-size: 10px;
+    background-position: right 4px center;
+    min-width: 55px;
+    flex: 1;
+    max-width: none;
+  }
+  
+  .year-selector {
+    min-width: 65px;
+  }
+  
+  .calendar-nav-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  
+  .calendar-day {
+    min-height: 35px;
+  }
+  
+  .weekday {
+    padding: 6px 2px;
+    font-size: 11px;
+  }
+  
+  .day-number {
+    font-size: 11px;
+  }
+}
+
+/* ==========================================================================
+   アニメーション
+   ========================================================================== */
+
+.fishing-calendar-container {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendar-day {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   アクセシビリティ対応
+   ========================================================================== */
+
+.calendar-nav-btn:focus,
+.calendar-day:focus {
+  outline: 2px solid #ffd700;
+  outline-offset: 2px;
+}
+
+.calendar-day.has-posts:focus {
+  outline: 2px solid #ffffff;
+}
+
+/* スクリーンリーダー用のテキスト */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   ローディング状態
+   ========================================================================== */
+
+.calendar-loading {
+  position: relative;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.calendar-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #ddd;
+  border-top: 2px solid #78B96C;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 360px) {
+  .fishing-calendar-section h2 {
+    width: 240px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .calendar-header {
+    padding: 0 3px;
+    gap: 5px;
+  }
+  
+  .calendar-selectors {
+    gap: 8px;
+  }
+  
+  .year-selector,
+  .month-selector {
+    padding: 4px 4px;
+    font-size: 12px;
+    padding-right: 20px;
+    background-size: 9px;
+    background-position: right 3px center;
+    min-width: 50px;
+    flex: 1;
+    max-width: none;
+  }
+  
+  .year-selector {
+    min-width: 60px;
+  }
+  
+  .calendar-nav-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}
